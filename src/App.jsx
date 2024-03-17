@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
+import { DarkModeProvider } from './contexts/DarkModeContext';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <DarkModeProvider>
+      <RouterProvider router={router} />
+    </DarkModeProvider>
+  );
 }
 
 export default App;
