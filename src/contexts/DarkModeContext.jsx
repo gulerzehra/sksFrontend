@@ -13,11 +13,13 @@ function DarkModeProvider({ children }) {
   useEffect(
     function () {
       if (isDarkMode) {
-        document.body.classList.add('dark');
-        document.body.classList.remove('light');
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+        document.documentElement.style.colorScheme = 'dark';
       } else {
-        document.body.classList.add('light');
-        document.body.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
       }
     },
     [isDarkMode],
