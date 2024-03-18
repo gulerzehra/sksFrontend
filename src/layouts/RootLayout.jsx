@@ -1,11 +1,23 @@
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from '../components/Header/HeaderComp';
+import Footer from '../components/Footer/FooterComp';
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+`;
 
 function RootLayout() {
   return (
-    <div>
-      <h1>Welcome to the app!</h1>
-      <Outlet />
-    </div>
+    <>
+      <Container>
+        <Header />
+        <Outlet />
+        <Footer />
+      </Container>
+    </>
   );
 }
 
