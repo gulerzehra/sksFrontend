@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 import GlobalStyles from './styles/GlobalStyles';
+import Home from './pages/Home/HomeComp';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true, element: <h1>Home page</h1> },
+      { index: true, element: <Home /> },
       { path: 'clubs', element: <h1>Clubs page</h1> },
       { path: 'events', element: <h1>Events page</h1> },
     ],
