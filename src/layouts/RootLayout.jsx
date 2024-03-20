@@ -4,9 +4,8 @@ import Header from '../components/Header/HeaderComp';
 import Footer from '../components/Footer/FooterComp';
 
 const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1160px;
   margin: 0 auto;
-  padding: 0 20px;
 `;
 
 function RootLayout() {
