@@ -22,6 +22,27 @@ import {
   HeaderUserPanelUserItemNotificationsNotificationTitle,
   HeaderUserPanelUserItemNotificationsNotificationDescription,
 } from './HeaderComp-styled';
+import PropTypes from 'prop-types';
+
+const DUMMY_DATA = [
+  {
+    id: 1,
+    club: 'AICLUB',
+    description:
+      'Dear participant, starting from tomorrow we change our schedule',
+  },
+  {
+    id: 2,
+    club: 'Gaming Club',
+    description: 'Great News! In upcoming gamescom we gonna our STAND!',
+  },
+  {
+    id: 3,
+    club: 'Rockstar',
+    description:
+      'Dear Participants, you can join as beta tester for upcoming GTA',
+  },
+];
 
 function Switch() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -40,6 +61,26 @@ function Switch() {
   );
 }
 
+function Notification({ club, description }) {
+  return (
+    <HeaderUserPanelUserItemNotificationsNotification>
+      <Link to="/">
+        <HeaderUserPanelUserItemNotificationsNotificationTitle>
+          New announcment from {club}
+        </HeaderUserPanelUserItemNotificationsNotificationTitle>
+        <HeaderUserPanelUserItemNotificationsNotificationDescription>
+          {description}
+        </HeaderUserPanelUserItemNotificationsNotificationDescription>
+      </Link>
+    </HeaderUserPanelUserItemNotificationsNotification>
+  );
+}
+
+Notification.propTypes = {
+  club: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
+
 function User() {
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -51,45 +92,24 @@ function User() {
     <HeaderUserPanelUser>
       <HeaderUserPanelUserItem onClick={handleShowNotifications}>
         Minthe
-        <HeaderUserPanelUserItemUnreadBadge>
-          3
-        </HeaderUserPanelUserItemUnreadBadge>
+        {DUMMY_DATA.length > 0 && (
+          <HeaderUserPanelUserItemUnreadBadge>
+            {DUMMY_DATA.length}
+          </HeaderUserPanelUserItemUnreadBadge>
+        )}
         <HeaderUserPanelUserItemNotifications
           className={showNotifications ? '' : 'hidden'}
         >
           <HeaderUserPanelUserItemNotificationsTitle>
             Messages
           </HeaderUserPanelUserItemNotificationsTitle>
-          <HeaderUserPanelUserItemNotificationsNotification>
-            <Link to="/">
-              <HeaderUserPanelUserItemNotificationsNotificationTitle>
-                New announcment from AICLUB
-              </HeaderUserPanelUserItemNotificationsNotificationTitle>
-              <HeaderUserPanelUserItemNotificationsNotificationDescription>
-                Dear participant, starting from tomorrow we change our schedule
-              </HeaderUserPanelUserItemNotificationsNotificationDescription>
-            </Link>
-          </HeaderUserPanelUserItemNotificationsNotification>
-          <HeaderUserPanelUserItemNotificationsNotification>
-            <Link to="/">
-              <HeaderUserPanelUserItemNotificationsNotificationTitle>
-                New announcment from Gaming Club
-              </HeaderUserPanelUserItemNotificationsNotificationTitle>
-              <HeaderUserPanelUserItemNotificationsNotificationDescription>
-                Great News! In upcoming gamescom we gonna our STAND!
-              </HeaderUserPanelUserItemNotificationsNotificationDescription>
-            </Link>
-          </HeaderUserPanelUserItemNotificationsNotification>
-          <HeaderUserPanelUserItemNotificationsNotification>
-            <Link to="/">
-              <HeaderUserPanelUserItemNotificationsNotificationTitle>
-                New announcment from Rockstar
-              </HeaderUserPanelUserItemNotificationsNotificationTitle>
-              <HeaderUserPanelUserItemNotificationsNotificationDescription>
-                Dear Participants, you can join as beta tester for upcoming GTA
-              </HeaderUserPanelUserItemNotificationsNotificationDescription>
-            </Link>
-          </HeaderUserPanelUserItemNotificationsNotification>
+          {DUMMY_DATA.map((notification) => (
+            <Notification
+              key={notification.id}
+              club={notification.club}
+              description={notification.description}
+            />
+          ))}
         </HeaderUserPanelUserItemNotifications>
       </HeaderUserPanelUserItem>
       <HeaderUserPanelUserItem className="divider">
@@ -104,7 +124,7 @@ function HeaderComp() {
     <Header>
       <Link to="/" className="header__logo">
         <HeaderLogo>
-          <HeaderLogoImg src="/kunefe.svg" alt="Kunefe Logo" />
+          <HeaderLogoImg src="/kunefe.png" alt="Kunefe Logo" />
           <HeaderLogoText>Künefe</HeaderLogoText>
         </HeaderLogo>
       </Link>
