@@ -4,36 +4,9 @@ import useInterval from '../../../../hooks/useInterval';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { DUMMY_DATA_SLIDERS as DUMMY_DATA } from '../../../../data/sliders';
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    club: 'AICLUB',
-    title:
-      'What is the Connection Between Advertising and Artificial Intelligence?',
-    img: '/sliders/slider-1.png',
-  },
-  {
-    id: 2,
-    club: 'Psychology Club',
-    title: 'Psychology club members visited Istanbul Dialogue Museum',
-    img: '/sliders/slider-2.png',
-  },
-  {
-    id: 3,
-    club: 'TEKNOFEST',
-    title:
-      "Teknofest 2024: Where Innovation Meets Technology for Tomorrow's World",
-    img: '/sliders/slider-3.png',
-  },
-  {
-    id: 4,
-    club: 'Culture',
-    title:
-      'Beyoğlu Culture Path Festival is with you from September 28 to October 6',
-    img: '/sliders/slider-4.png',
-  },
-];
+DUMMY_DATA.sort((a, b) => a.time.localeCompare(b.time));
 
 /**
  * @deprecated This component is deprecated and will be removed in the future.
