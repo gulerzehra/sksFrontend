@@ -49,7 +49,6 @@ export const Clubs = styled.section`
     padding: 20px;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    margin: 0 20px;
     white-space: nowrap;
   }
 `;

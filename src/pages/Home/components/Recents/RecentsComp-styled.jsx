@@ -22,8 +22,8 @@ export const Recents = styled.section`
     position: relative;
     padding: 20px 20px;
     background-color: var(--color-recents);
-    margin-left: calc(20px + 15px);
-    margin-right: 15px;
+    margin-left: 35px; /* 20px + 15px */
+    margin-right: 35px; /* 20px + 15px */
     white-space: nowrap;
     border-radius: 50px;
     display: grid;

@@ -35,7 +35,6 @@ export const Hero = styled.section`
     font-size: 1.5rem;
     font-weight: normal;
     color: var(--color-title);
-    user-select: none;
     text-transform: uppercase;
   }
 
@@ -45,7 +44,6 @@ export const Hero = styled.section`
     color: var(--color-title);
     line-height: 1.2;
     margin-bottom: 20px;
-    user-select: none;
   }
 
   .content-button {
