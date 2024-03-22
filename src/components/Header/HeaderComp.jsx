@@ -23,26 +23,9 @@ import {
   HeaderUserPanelUserItemNotificationsNotificationDescription,
 } from './HeaderComp-styled';
 import PropTypes from 'prop-types';
+import { DUMMY_DATA_NOTIFICATIONS as DUMMY_DATA } from '../../data/notifications';
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    club: 'AICLUB',
-    description:
-      'Dear participant, starting from tomorrow we change our schedule',
-  },
-  {
-    id: 2,
-    club: 'Gaming Club',
-    description: 'Great News! In upcoming gamescom we gonna our STAND!',
-  },
-  {
-    id: 3,
-    club: 'Rockstar',
-    description:
-      'Dear Participants, you can join as beta tester for upcoming GTA',
-  },
-];
+DUMMY_DATA.sort((a, b) => b.id - a.id);
 
 function Switch() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
