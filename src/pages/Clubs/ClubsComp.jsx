@@ -1,10 +1,11 @@
 import { Clubs, ClubsAlt, InnerContainer } from './ClubsComp-styled';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks/useQuery';
 import PropTypes from 'prop-types';
 import { searchData } from '../../utils/searchData';
 import { DUMMY_DATA_CLUBS as DUMMY_DATA } from '../../data/clubs';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 function SearchIcon() {
   return (
@@ -106,9 +107,7 @@ function ClubsComp() {
 
   const filteredData = searchData(DUMMY_DATA, searchQuery);
 
-  useEffect(() => {
-    document.title = 'Clubs | Künefe SKS';
-  }, []);
+  useDocumentTitle('Clubs');
 
   function onChangeHandler(e) {
     setSearchQuery(e.target.value);
