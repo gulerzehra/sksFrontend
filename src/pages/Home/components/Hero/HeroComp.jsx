@@ -1,6 +1,6 @@
 import { Hero } from './HeroComp-styled';
 import { useState } from 'react';
-import useInterval from '../../../../hooks/useInterval';
+import { useInterval } from '../../../../hooks/useInterval';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
