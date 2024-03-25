@@ -1,50 +1,55 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
-:root {
-  /* color-scheme: dark; */
-  --font-family: 'Ubuntu Condensed', sans-serif;
-  --font-size: 16px;
+  :root {
+    --font-family: 'Ubuntu Condensed', sans-serif;
+    --font-size: 16px;
 
-  --color-success: #35b25f;
-  --color-danger: #d44040;
+    --color-success: #35b25f;
+    --color-danger: #d44040;
 
-  &, &.light {
-    --color-body: #fff;
-    --color-body-text: #212529;
-    --color-title: #000;
-    --color-description: #7b7b7b;
-    --color-header: #f0f4f9;
-    --color-switcher: #000;
-    --color-switcher-circle: #fff;
-    --color-unread-count: #d9d9d9;
-    --color-progress-filled: #000;
-    --color-progress-empty: #abaaaa;
-    --color-button: #0a58d0;
-    --color-recents: #f0f4f9;
-    --color-recents-border: #c1c1c1;
-    --color-footer: #808080;
-    --color-footer-text: #fff;
+    &, &.light {
+      --color-body: #fff;
+      --color-body-text: #212529;
+      --color-title: #000;
+      --color-description: #7b7b7b;
+      --color-header: #f0f4f9;
+      --color-switcher: #000;
+      --color-switcher-circle: #fff;
+      --color-unread-count: #d9d9d9;
+      --color-progress-filled: #000;
+      --color-progress-empty: #abaaaa;
+      --color-button: #0a58d0;
+      --color-recents: #f0f4f9;
+      --color-recents-border: #c1c1c1;
+      --color-footer: #808080;
+      --color-footer-text: #fff;
+
+      --color-club-alt: #616161;
+      --color-club-event-text: #0a58d0;
+    }
+
+    &.dark {
+      --color-body: #363535;
+      --color-body-text: #f9f8f8;
+      --color-title: #f9f8f8;
+      --color-description: #c9c9c9;
+      --color-header: #000000;
+      --color-switcher: #fff;
+      --color-switcher-circle: #000;
+      --color-unread-count: #d9d9d9;
+      --color-progress-filled: #fff;
+      --color-progress-empty: #abaaaa;
+      --color-button: #0a58d0;
+      --color-recents: #000;
+      --color-recents-border: #747775;
+      --color-footer: #808080;
+      --color-footer-text: #fff;
+
+      --color-club-alt: #000;
+      --color-club-event-text: #297fff;
+    }
   }
-
-  &.dark {
-    --color-body: #363535;
-    --color-body-text: #f9f8f8;
-    --color-title: #f9f8f8;
-    --color-description: #c9c9c9;
-    --color-header: #000000;
-    --color-switcher: #fff;
-    --color-switcher-circle: #000;
-    --color-unread-count: #d9d9d9;
-    --color-progress-filled: #fff;
-    --color-progress-empty: #abaaaa;
-    --color-button: #0a58d0;
-    --color-recents: #000;
-    --color-recents-border: #747775;
-    --color-footer: #808080;
-    --color-footer-text: #fff;
-  }
-}
 
   *,
   *::before,
@@ -67,9 +72,9 @@ const GlobalStyles = createGlobalStyle`
   }
 
   a {
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
   }
 
   h1,
