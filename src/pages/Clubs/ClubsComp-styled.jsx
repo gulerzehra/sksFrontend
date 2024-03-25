@@ -59,7 +59,6 @@ export const Clubs = styled.section`
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background-color: var(--color-background);
     border-radius: 12px;
     transition: box-shadow 0.3s;
 
@@ -90,7 +89,7 @@ export const Clubs = styled.section`
 
       .club-events-tip {
         font-size: 1rem;
-        color: var(--color-button);
+        color: var(--color-club-event-text);
         transform: translateY(5px);
       }
 
@@ -121,7 +120,7 @@ export const ClubsAlt = styled.section`
     flex-direction: column;
     padding: 8px 0;
     gap: 10px;
-    background-color: #616161;
+    background-color: var(--color-club-alt);
     color: #fff;
     height: 250px;
     border-radius: 16px;
