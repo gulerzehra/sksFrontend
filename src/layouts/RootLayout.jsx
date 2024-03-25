@@ -8,12 +8,18 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+const OutletAlign = styled.div`
+  min-height: calc(100vh - (80px + 40px));
+`;
+
 function RootLayout() {
   return (
     <>
       <Container>
         <Header />
-        <Outlet />
+        <OutletAlign>
+          <Outlet />
+        </OutletAlign>
         <Footer />
       </Container>
     </>
