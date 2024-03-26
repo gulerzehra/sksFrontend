@@ -80,20 +80,20 @@ function User() {
             {DUMMY_DATA.length}
           </HeaderUserPanelUserItemUnreadBadge>
         )}
-        <HeaderUserPanelUserItemNotifications
-          className={showNotifications ? '' : 'hidden'}
-        >
-          <HeaderUserPanelUserItemNotificationsTitle>
-            Messages
-          </HeaderUserPanelUserItemNotificationsTitle>
-          {DUMMY_DATA.map((notification) => (
-            <Notification
-              key={notification.id}
-              club={notification.club}
-              description={notification.description}
-            />
-          ))}
-        </HeaderUserPanelUserItemNotifications>
+        {showNotifications && (
+          <HeaderUserPanelUserItemNotifications>
+            <HeaderUserPanelUserItemNotificationsTitle>
+              Messages
+            </HeaderUserPanelUserItemNotificationsTitle>
+            {DUMMY_DATA.map((notification) => (
+              <Notification
+                key={notification.id}
+                club={notification.club}
+                description={notification.description}
+              />
+            ))}
+          </HeaderUserPanelUserItemNotifications>
+        )}
       </HeaderUserPanelUserItem>
       <HeaderUserPanelUserItem className="divider">
         <Link to="/">Logout</Link>
