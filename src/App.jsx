@@ -4,6 +4,7 @@ import { DarkModeProvider } from './contexts/DarkModeContext';
 import GlobalStyles from './styles/GlobalStyles';
 import Home from './pages/Home/HomeComp';
 import Clubs from './pages/Clubs/ClubsComp';
+import Events from './pages/Events/EventsComp';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'clubs', element: <Clubs /> },
-      { path: 'events', element: <h1>Events page</h1> },
+      { path: 'events', element: <Events /> },
     ],
   },
   {
