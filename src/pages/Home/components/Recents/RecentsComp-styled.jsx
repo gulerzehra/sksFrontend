@@ -7,14 +7,6 @@ export const Recents = styled.section`
     font-size: 1.5rem;
     font-weight: normal;
     color: var(--color-title);
-    margin: 0 auto 0 20px;
-  }
-
-  .description {
-    font-size: 1rem;
-    font-weight: normal;
-    color: var(--color-description);
-    margin-bottom: 20px;
     margin: 0 auto 20px 20px;
   }
 
