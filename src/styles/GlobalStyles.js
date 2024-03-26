@@ -12,7 +12,6 @@ const GlobalStyles = createGlobalStyle`
       --color-body: #fff;
       --color-body-text: #212529;
       --color-title: #000;
-      --color-description: #7b7b7b;
       --color-header: #f0f4f9;
       --color-switcher: #000;
       --color-switcher-circle: #fff;
@@ -33,7 +32,6 @@ const GlobalStyles = createGlobalStyle`
       --color-body: #363535;
       --color-body-text: #f9f8f8;
       --color-title: #f9f8f8;
-      --color-description: #c9c9c9;
       --color-header: #000000;
       --color-switcher: #fff;
       --color-switcher-circle: #000;
