@@ -39,7 +39,6 @@ function RecentsComp() {
   return (
     <Recents>
       <h2 className="title">Recents</h2>
-      <p className="description">Based on your club interests</p>
       <div className="content">
         {DUMMY_DATA.map((post) => (
           <PostComp
