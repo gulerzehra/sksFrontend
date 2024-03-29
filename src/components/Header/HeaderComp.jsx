@@ -81,7 +81,9 @@ function User() {
           </HeaderUserPanelUserItemUnreadBadge>
         )}
         {showNotifications && (
-          <HeaderUserPanelUserItemNotifications>
+          <HeaderUserPanelUserItemNotifications
+            onClick={(e) => e.stopPropagation()}
+          >
             <HeaderUserPanelUserItemNotificationsTitle>
               Messages
             </HeaderUserPanelUserItemNotificationsTitle>

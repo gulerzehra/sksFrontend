@@ -54,8 +54,6 @@ function EventsComp() {
     [[], []],
   );
 
-  console.log(officialEvents, clubEvents);
-
   useDocumentTitle('Events');
 
   function onChangeHandler(e) {
@@ -89,7 +87,7 @@ function EventsComp() {
         >
           <HiFunnel className="filter-icon" /> Filter
           {showPopup1 && (
-            <div className="filter-popup">
+            <div className="filter-popup" onClick={(e) => e.stopPropagation()}>
               <div className="popup-header">
                 <h2 className="popup-header-title">Categories</h2>
                 <div className="popup-header-calendar">
@@ -183,7 +181,7 @@ function EventsComp() {
         >
           <HiFunnel className="filter-icon" /> Filter
           {showPopup2 && (
-            <div className="filter-popup">
+            <div className="filter-popup" onClick={(e) => e.stopPropagation()}>
               <div className="popup-header">
                 <h2 className="popup-header-title">Categories</h2>
                 <div className="popup-header-calendar">
