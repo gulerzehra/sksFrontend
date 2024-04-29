@@ -25,7 +25,7 @@ export const InnerContainer = styled.div`
     margin-left: 10px;
     width: 1.2rem;
     height: 1.2rem;
-    stroke: #757575;
+    color: var(--color-progress-empty);
   }
 
   .search {
