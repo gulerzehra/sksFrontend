@@ -6,7 +6,7 @@ export const Header = styled.header`
   align-items: center;
   padding: 20px 10px;
   background-color: var(--color-header);
-  box-shadow: 0 15px 10px -15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
   z-index: 1000;
 `;
 
