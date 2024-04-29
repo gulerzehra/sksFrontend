@@ -9,10 +9,12 @@ import Events from './pages/Events/EventsComp';
 const router = createBrowserRouter([
   {
     path: 'login',
+    // @busraygul - Add a new route for the /login page
     element: <h1>Login page</h1>,
   },
   {
     path: 'register',
+    // @gulerzehra - Add a new route for the /register page
     element: <h1>Register page</h1>,
   },
   {
@@ -22,11 +24,9 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'clubs', element: <Clubs /> },
       { path: 'events', element: <Events /> },
+      // Routes which will be added should be added here, not below of NotFound route
+      { path: '*', element: <h1>Not found</h1> },
     ],
-  },
-  {
-    path: '*',
-    element: <h1>Not found</h1>,
   },
 ]);
 
