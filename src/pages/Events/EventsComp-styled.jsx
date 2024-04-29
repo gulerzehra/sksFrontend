@@ -18,7 +18,7 @@ export const InnerContainer = styled.div`
     margin-left: 10px;
     width: 1.2rem;
     height: 1.2rem;
-    stroke: #757575;
+    color: var(--color-progress-empty);
   }
 
   .search {
@@ -182,7 +182,7 @@ export const Events = styled.section`
     height: auto;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-header);
+    background-color: #f0f4f9;
     border-radius: 10px;
   }
 
@@ -206,7 +206,7 @@ export const Events = styled.section`
   .event .event-content .event-title {
     font-size: 1.2rem;
     font-weight: bold;
-    color: var(--color-title);
+    color: #000;
   }
 
   .event .event-content .event-address {
