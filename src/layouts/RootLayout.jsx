@@ -6,22 +6,17 @@ import Footer from '../components/Footer/FooterComp';
 const Container = styled.div`
   max-width: 1160px;
   margin: 0 auto;
-`;
-
-const OutletAlign = styled.div`
   min-height: calc(100vh - (80px + 40px));
 `;
 
 function RootLayout() {
   return (
     <>
+      <Header />
       <Container>
-        <Header />
-        <OutletAlign>
-          <Outlet />
-        </OutletAlign>
-        <Footer />
+        <Outlet />
       </Container>
+      <Footer />
     </>
   );
 }
