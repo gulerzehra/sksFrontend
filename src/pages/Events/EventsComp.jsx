@@ -1,10 +1,11 @@
 import { Events, InnerContainer } from './EventsComp-styled';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { searchData } from '../../utils/searchData';
 import { DUMMY_DATA_EVENTS as DUMMY_DATA } from '../../data/events';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { HiMagnifyingGlass, HiFunnel, HiCalendarDays } from 'react-icons/hi2';
 
 function EventComp({ id, title, address, date, img }) {
@@ -39,6 +40,10 @@ function EventsComp() {
   const [officialEventCount, setOfficialEventCount] = useState(3);
   const [showPopup1, setShowPopup1] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
+  const popup1ref = useRef(null);
+  const popup2ref = useRef(null);
+  useOutsideClick(popup1ref, () => setShowPopup1(false));
+  useOutsideClick(popup2ref, () => setShowPopup2(false));
   const filteredData = searchData(DUMMY_DATA, searchQuery, 'title');
   const [officialEvents, clubEvents] = filteredData.reduce(
     (acc, event) => {
@@ -87,7 +92,11 @@ function EventsComp() {
         >
           <HiFunnel className="filter-icon" /> Filter
           {showPopup1 && (
-            <div className="filter-popup" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="filter-popup"
+              onClick={(e) => e.stopPropagation()}
+              ref={popup1ref}
+            >
               <div className="popup-header">
                 <h2 className="popup-header-title">Categories</h2>
                 <div className="popup-header-calendar">
@@ -181,7 +190,11 @@ function EventsComp() {
         >
           <HiFunnel className="filter-icon" /> Filter
           {showPopup2 && (
-            <div className="filter-popup" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="filter-popup"
+              onClick={(e) => e.stopPropagation()}
+              ref={popup2ref}
+            >
               <div className="popup-header">
                 <h2 className="popup-header-title">Categories</h2>
                 <div className="popup-header-calendar">
