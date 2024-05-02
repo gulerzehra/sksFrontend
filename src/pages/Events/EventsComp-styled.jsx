@@ -72,8 +72,8 @@ export const InnerContainer = styled.div`
 
   .title-line .filter-btn {
     /* margin-left: auto; */
-    background-color: var(--color-header);
-    color: #616161; //! dark: #fff
+    background-color: #fff;
+    color: #616161;
     padding: 8px 16px;
     border: none;
     border-radius: 1000px;
