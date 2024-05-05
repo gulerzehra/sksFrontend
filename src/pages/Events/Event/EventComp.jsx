@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { DUMMY_DATA_EVENTS } from '../../../data/events';
 import { EventCompStyled } from './EventComp-styled';
+import { dtf } from '../../../utils/dtFormatter';
 
 function EventComp() {
   const { eventId } = useParams();
@@ -18,7 +19,7 @@ function EventComp() {
         </div>
         <aside className="event-date-url">
           <p className="event-date">
-            Date & Time: <time>{event.date}</time>
+            Date & Time: <time>{dtf(event.date)}</time>
           </p>
           <p className="event-url">
             URL:{' '}
