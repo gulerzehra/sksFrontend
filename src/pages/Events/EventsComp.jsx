@@ -9,6 +9,12 @@ import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { HiFunnel, HiCalendarDays } from 'react-icons/hi2';
 import SearchComp from '../../components/Search/SearchComp';
 import CalendarComp from '../../components/Calendar/CalendarComp';
+import { Calendar as WeeklyCalendr, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { dtf } from '../../utils/dtFormatter';
+
+const localizer = momentLocalizer(moment);
 
 function FilterOptionComp({ name, selectedCategories, setSelectedCategories }) {
   function onChangeHandler(e) {
@@ -55,7 +61,7 @@ function EventComp({ id, title, address, date, img }) {
           <h2 className="event-title">{title}</h2>
           <address className="event-address">{address}</address>
           <p className="event-datetime">
-            <time dateTime="2022-04-15T10:00:00">{date}</time>
+            <time dateTime={date}>{dtf(date)}</time>
           </p>
         </div>
       </article>
@@ -262,6 +268,19 @@ function EventsComp() {
     <InnerContainer>
       <SearchComp searchQuery={searchQuery} onChangeHandler={onChangeHandler} />
       <OfficialEventsComp events={officialEvents} searchQuery={searchQuery} />
+      <h1 className="weekly-title">Weekly Calendar</h1>
+      <WeeklyCalendr
+        localizer={localizer}
+        defaultView="week"
+        events={DUMMY_DATA.map((event) => ({
+          title: event.title,
+          start: new Date(event.date),
+          end: new Date(event.endDate),
+        }))}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ width: '500', margin: '50px auto' }}
+      />
       <ClubEventsComp events={clubEvents} searchQuery={searchQuery} />
     </InnerContainer>
   );
