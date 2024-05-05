@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { searchData } from '../../utils/searchData';
 import { DUMMY_DATA_CLUBS as DUMMY_DATA } from '../../data/clubs';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import { HiMagnifyingGlass } from 'react-icons/hi2';
+import SearchComp from '../../components/Search/SearchComp';
 
 function ClubComp({ id, name, img, events }) {
   return (
@@ -98,18 +98,7 @@ function ClubsComp() {
   return (
     <InnerContainer>
       <h1 className="title">Clubs</h1>
-      <div className="search-frame">
-        <HiMagnifyingGlass className="search-icon" />
-        <input
-          className="search"
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Search Club"
-          value={searchQuery}
-          onChange={onChangeHandler}
-        />
-      </div>
+      <SearchComp searchQuery={searchQuery} onChangeHandler={onChangeHandler} />
       {query.get('view') === 'alt' ? (
         <ClubsAlt>
           {filteredData.map((club) => (
