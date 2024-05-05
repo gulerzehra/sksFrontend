@@ -26,6 +26,8 @@ const GlobalStyles = createGlobalStyle`
 
       --color-club-alt: #616161;
       --color-club-event-text: #0a58d0;
+
+      --color-event-detail-text: #494b4a;
     }
 
     &.dark {
@@ -46,6 +48,8 @@ const GlobalStyles = createGlobalStyle`
 
       --color-club-alt: #000;
       --color-club-event-text: #297fff;
+
+      --color-event-detail-text: #fff;
     }
   }
 
