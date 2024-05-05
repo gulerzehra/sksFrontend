@@ -5,6 +5,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import Home from './pages/Home/HomeComp';
 import Clubs from './pages/Clubs/ClubsComp';
 import Events from './pages/Events/EventsComp';
+import Event from './pages/Events/Event/EventComp';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'clubs', element: <Clubs /> },
       { path: 'events', element: <Events /> },
+      { path: 'events/:eventId', element: <Event /> },
       // Routes which will be added should be added here, not below of NotFound route
       { path: '*', element: <h1>Not found</h1> },
     ],
