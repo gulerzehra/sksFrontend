@@ -1,5 +1,5 @@
 import { Events, InnerContainer } from './EventsComp-styled';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { searchData } from '../../utils/searchData';
@@ -8,12 +8,30 @@ import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { HiFunnel, HiCalendarDays } from 'react-icons/hi2';
 import SearchComp from '../../components/Search/SearchComp';
+import CalendarComp from '../../components/Calendar/CalendarComp';
 
-function FilterOptionComp({ name }) {
+function FilterOptionComp({ name, selectedCategories, setSelectedCategories }) {
+  function onChangeHandler(e) {
+    const categoryName = e.target.name.split('-')[0];
+    if (e.target.checked) {
+      setSelectedCategories((prev) => [...prev, categoryName]);
+    } else {
+      setSelectedCategories((prev) =>
+        prev.filter((category) => category !== categoryName),
+      );
+    }
+  }
+
   return (
     <div className="filter-option">
       <label htmlFor={name} className="filter-option-label">
-        <input type="checkbox" name={name} id={name} />
+        <input
+          type="checkbox"
+          name={name}
+          id={name}
+          onChange={onChangeHandler}
+          checked={selectedCategories.includes(name.split('-')[0])}
+        />
         {name.split('-')[0]}
       </label>
     </div>
@@ -22,6 +40,8 @@ function FilterOptionComp({ name }) {
 
 FilterOptionComp.propTypes = {
   name: PropTypes.string.isRequired,
+  selectedCategories: PropTypes.array.isRequired,
+  setSelectedCategories: PropTypes.func.isRequired,
 };
 
 function EventComp({ id, title, address, date, img }) {
@@ -53,8 +73,23 @@ EventComp.propTypes = {
 
 function EventsLineComp({ title, events, children }) {
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]); // ['Health', 'Gaming']
+  const [isDateSelected, setIsDateSelected] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
   const popupRef = useRef(null);
   useOutsideClick(popupRef, () => setShowPopup(false));
+
+  useEffect(() => {
+    setIsDateSelected(false);
+  }, [selectedDate]);
+
+  let selectedDateText;
+
+  if (selectedDate) {
+    selectedDateText = selectedDate.toDateString();
+  } else {
+    selectedDateText = 'Select Date';
+  }
 
   return (
     <>
@@ -73,20 +108,59 @@ function EventsLineComp({ title, events, children }) {
             >
               <div className="popup-header">
                 <h2 className="popup-header-title">Categories</h2>
-                <div className="popup-header-calendar">
+                <div
+                  className="popup-header-calendar"
+                  onClick={() =>
+                    setIsDateSelected((isDateSelected) => !isDateSelected)
+                  }
+                >
                   <HiCalendarDays className="calendar-icon" />
-                  <p className="calendar-text">18 march, 2024</p>
+                  <p className="calendar-text">{selectedDateText}</p>
                 </div>
               </div>
               <div className="popup-content">
-                <FilterOptionComp name={`Health-${title.split(' ')[0]}`} />
-                <FilterOptionComp name={`Gaming-${title.split(' ')[0]}`} />
-                <FilterOptionComp name={`Travel-${title.split(' ')[0]}`} />
-                <FilterOptionComp name={`Technology-${title.split(' ')[0]}`} />
-                <FilterOptionComp name={`Psychology-${title.split(' ')[0]}`} />
-                <FilterOptionComp name={`Music-${title.split(' ')[0]}`} />
-                <FilterOptionComp name={`Media-${title.split(' ')[0]}`} />
+                <FilterOptionComp
+                  name={`Health-${title.split(' ')[0]}`}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+                <FilterOptionComp
+                  name={`Gaming-${title.split(' ')[0]}`}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+                <FilterOptionComp
+                  name={`Travel-${title.split(' ')[0]}`}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+                <FilterOptionComp
+                  name={`Technology-${title.split(' ')[0]}`}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+                <FilterOptionComp
+                  name={`Psychology-${title.split(' ')[0]}`}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+                <FilterOptionComp
+                  name={`Music-${title.split(' ')[0]}`}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+                <FilterOptionComp
+                  name={`Media-${title.split(' ')[0]}`}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
               </div>
+              {isDateSelected && (
+                <CalendarComp
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                />
+              )}
             </div>
           )}
         </button>
@@ -113,7 +187,7 @@ function EventsLineComp({ title, events, children }) {
 EventsLineComp.propTypes = {
   title: PropTypes.string.isRequired,
   events: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 function OfficialEventsComp({ events, searchQuery }) {

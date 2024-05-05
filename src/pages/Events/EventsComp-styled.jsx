@@ -72,7 +72,7 @@ export const InnerContainer = styled.div`
 
   .title-line .filter-btn {
     /* margin-left: auto; */
-    background-color: #fff;
+    background-color: #f0f4f9;
     color: #616161;
     padding: 8px 16px;
     border: none;
@@ -130,6 +130,7 @@ export const InnerContainer = styled.div`
     background-color: #f9f8f8;
     padding: 8px 16px;
     border-radius: 1000px;
+    cursor: pointer;
   }
 
   .popup-header-calendar .calendar-icon {
@@ -141,6 +142,7 @@ export const InnerContainer = styled.div`
     font-size: 0.8rem;
     font-weight: bold;
     width: max-content;
+    user-select: none;
   }
 
   .filter-popup .popup-content {

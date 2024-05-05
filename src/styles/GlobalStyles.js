@@ -88,6 +88,34 @@ const GlobalStyles = createGlobalStyle`
   .hidden {
     display: none !important;
   }
+
+  .react-calendar {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    border: 1px solid #a0a096;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    line-height: 1.125;
+    position: relative;
+    user-select: none;
+  }
+
+  .react-calendar__tile {
+    color: black;
+  }
+
+  .react-calendar__navigation button {
+    color: black;
+    min-width: 44px;
+    background: none;
+    font-size: 16px;
+  }
+
+  .react-calendar__navigation__label {
+    color: black;
+  }
 `;
 
 export default GlobalStyles;
