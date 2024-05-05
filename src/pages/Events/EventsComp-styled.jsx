@@ -64,7 +64,8 @@ export const InnerContainer = styled.div`
     align-items: center;
   }
 
-  .title-line .title {
+  .title-line .title,
+  .weekly-title {
     font-size: 2rem;
     font-weight: bold;
     color: var(--color-title);
