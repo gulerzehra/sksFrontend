@@ -6,6 +6,8 @@ import Home from './pages/Home/HomeComp';
 import Clubs from './pages/Clubs/ClubsComp';
 import Events from './pages/Events/EventsComp';
 import Event from './pages/Events/Event/EventComp';
+import Manager from './pages/Manager/ManagerComp';
+import ManagerEvents from './pages/Manager/Events/ManagerEventsComp';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,8 @@ const router = createBrowserRouter([
       { path: 'clubs', element: <Clubs /> },
       { path: 'events', element: <Events /> },
       { path: 'events/:eventId', element: <Event /> },
+      { path: 'manage', element: <Manager /> },
+      { path: 'manage/events', element: <ManagerEvents /> },
       // Routes which will be added should be added here, not below of NotFound route
       { path: '*', element: <h1>Not found</h1> },
     ],

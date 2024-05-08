@@ -5,6 +5,8 @@ const GlobalStyles = createGlobalStyle`
     --font-family: 'Ubuntu Condensed', sans-serif;
     --font-size: 16px;
 
+    --color-primary: #0a58d0;
+    --color-secondary: #898787;
     --color-success: #35b25f;
     --color-danger: #d44040;
 
@@ -119,6 +121,22 @@ const GlobalStyles = createGlobalStyle`
 
   .react-calendar__navigation__label {
     color: black;
+  }
+
+  .color-primary {
+    color: var(--color-primary) !important;
+  }
+
+  .color-secondary {
+    color: var(--color-secondary) !important;
+  }
+
+  .color-success {
+    color: var(--color-success) !important;
+  }
+
+  .color-danger {
+    color: var(--color-danger) !important;
   }
 `;
 

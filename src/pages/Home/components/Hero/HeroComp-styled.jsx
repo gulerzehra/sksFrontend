@@ -46,18 +46,6 @@ export const Hero = styled.section`
     margin-bottom: 20px;
   }
 
-  .content-button {
-    padding: 10px 20px;
-    background-color: var(--color-button);
-    color: #fff;
-    border: none;
-    border-radius: 1000px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-family: inherit;
-    width: fit-content;
-  }
-
   .progress-frame {
     display: flex;
     justify-content: center;
