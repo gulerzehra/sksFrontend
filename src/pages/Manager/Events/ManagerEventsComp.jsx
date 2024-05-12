@@ -116,7 +116,7 @@ function ManagerEventsComp() {
     <InnerContainer>
       <div className="title-line">
         <h1 className="title">Events Manage Panel</h1>
-        <Button linkTo="/manage/events/add">Add Event</Button>
+        <Button linkTo="add">Add Event</Button>
       </div>
       <div className="panel">
         <div className="search">
