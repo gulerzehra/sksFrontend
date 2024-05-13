@@ -1,20 +1,14 @@
 import styled from 'styled-components';
 
-
 export const RegisterPageContainer = styled.div`
-height: 100vh;
-max-width: 100vw;
-display: flex;
-flex-direction: row;
-justify-content: center; 
-align-items: center; 
-margin-top: 140px;
-
+  height: 100vh;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 140px;
 `;
-
-
-
-
 
 export const RegisterInfo = styled.div`
   width: 350px; /* Sabit genişlik */
@@ -26,16 +20,14 @@ export const RegisterInfo = styled.div`
   flex-direction: column;
   padding: 20px;
   margin-bottom: 220px;
-  margin-right:250px;
-
-
+  margin-right: 250px;
 
   .infodiv {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     // justify-content: space-between;
-    
+
     h1 {
       color: black;
       text-align: center;
@@ -43,52 +35,48 @@ export const RegisterInfo = styled.div`
       font-style: normal;
       font-weight: 600;
       // line-height: 129%; /* 74.82px */
-      margin-bottom:18px;
+      margin-bottom: 18px;
     }
 
-    p{
+    p {
       color: #000000;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
       // line-height: normal;
       margin-top: 0px;
       padding-top: 0px;
-      
     }
   }
 `;
 
 export const SingUpForm = styled.div`
-width: 500px; /* Sabit genişlik */
-/* position: fixed; Sabit kalma özelliği */
-right: 200px; /* Sayfanın sağından 100px uzaklıkta */
-top: 50%; /* Sayfanın yukarısından dikey olarak ortalamak */
-transform: translateY(-50%); /* Dikey olarak ortalamak için */
-display: flex;
-flex-direction: column;
-// align-items: center;
-margin-top: 180px;
+  width: 500px; /* Sabit genişlik */
+  /* position: fixed; Sabit kalma özelliği */
+  right: 200px; /* Sayfanın sağından 100px uzaklıkta */
+  top: 50%; /* Sayfanın yukarısından dikey olarak ortalamak */
+  transform: translateY(-50%); /* Dikey olarak ortalamak için */
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  margin-top: 180px;
 
-
-  p{
+  p {
     display: flex;
     // margin:14px;
-    color:#747775;
+    color: #747775;
     font-family: ubuntu-condensed;
-    margin-left:15px;
-
+    margin-left: 15px;
   }
 
-  label{
+  label {
     display: flex;
-    color:#747775;
+    color: #747775;
     font-family: ubuntu-condensed;
-    margin-left:15px;
+    margin-left: 15px;
     margin-top: 7px;
   }
-  
 
   input {
     margin-top: 20px;
@@ -99,7 +87,7 @@ margin-top: 180px;
     border: 1px solid #f2f2f2;
     background: #f2f2f2;
     color: #000000;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -107,15 +95,14 @@ margin-top: 180px;
     padding-left: 20px;
   }
 
-  
   .register-button {
     margin-top: 20px;
     width: 143px;
     height: 46px;
     border-radius: 25px;
-    background: #0A58D0;
+    background: #0a58d0;
     color: #ffffff;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -128,11 +115,9 @@ margin-top: 180px;
   .login {
     border: none; /* Butonun border'ını kaldırır */
     background: none; /* Butonun arka planını kaldırır */
-    color: #0A58D0; /* Butonun metin rengini kırmızı yapar */
+    color: #0a58d0; /* Butonun metin rengini kırmızı yapar */
     cursor: pointer; /* Butona imlecin değişmesini sağlar */
     font-weight: 500; /* Butonun metin kalınlığını artırır */
     font-size: 16px; /* Butonun metin boyutunu büyütür */
-}
-
-
-  `;
+  }
+`;

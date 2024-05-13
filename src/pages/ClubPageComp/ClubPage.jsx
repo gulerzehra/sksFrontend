@@ -3,11 +3,9 @@ import ClubInfo from '../../components/ClubInfo/ClubInfo'; // ClubInfo bileşeni
 
 function ClubPage() {
   return (
-    
     <>
       <ClubInfo />
-      
-  </>
+    </>
   );
 }
 
