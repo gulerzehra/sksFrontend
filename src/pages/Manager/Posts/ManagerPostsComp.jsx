@@ -5,13 +5,13 @@ import { ExclamationCircleIcon } from '../../../components/Icons/ExclamationCirc
 import { MagnifyingGlassIcon } from '../../../components/Icons/MagnifyingGlassIcon';
 import { PencilIcon } from '../../../components/Icons/PencilIcon';
 import { XCircleIcon } from '../../../components/Icons/XCircleIcon';
-import { DUMMY_DATA_EVENTS as DUMMY_DATA } from '../../../data/events';
-import { InnerContainer } from './ManagerEventsComp-styled';
+import { DUMMY_DATA_POSTS as DUMMY_DATA } from '../../../data/posts';
+import { InnerContainer } from './ManagerPostsComp-styled';
 import { TABLE_RESULTS_PER_PAGE } from '../../../utils/constants';
 
 DUMMY_DATA.sort((a, b) => a.date.localeCompare(b.date));
 
-const data = DUMMY_DATA.filter((event) => event.type === 'club');
+const data = DUMMY_DATA;
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -51,44 +51,38 @@ function labelEnumToIcon(label) {
  * @returns {Array} - Array of objects
  */
 function addEmptyRows(data, maxRows) {
-  const emptyRows = maxRows - data.length - 2;
+  const emptyRows = maxRows - data.length - 3;
   if (emptyRows <= 0) return data;
   return Array(emptyRows).fill({});
 }
 
-function ManagerEventsComp() {
+function ManagerPostsComp() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState([
     'pending',
     'approved',
     'rejected',
   ]);
-  const [dateFilter, setDateFilter] = useState(['today', 'past7', 'upcoming']);
+  const [dateFilter, setDateFilter] = useState(['today', 'past7']);
 
   const filteredData = data
-    .filter((event) => event.title.toLowerCase().includes(search.toLowerCase()))
-    .filter((event) => statusFilter.includes(event.status.toLowerCase()))
-    .filter((event) => {
-      const eventDate = new Date(event.date);
+    .filter((post) => post.title.toLowerCase().includes(search.toLowerCase()))
+    .filter((post) => statusFilter.includes(post.status.toLowerCase()))
+    .filter((post) => {
+      const postDate = new Date(post.date);
       const today = new Date();
+      const past7 = new Date(today - 7 * 24 * 60 * 60 * 1000);
       if (dateFilter.includes('today')) {
-        return (
-          eventDate.getDate() === today.getDate() &&
-          eventDate.getMonth() === today.getMonth() &&
-          eventDate.getFullYear() === today.getFullYear()
-        );
-      } else if (dateFilter.includes('past7')) {
-        const past7 = new Date(today);
-        past7.setDate(past7.getDate() - 7);
-        return eventDate >= past7 && eventDate <= today;
-      } else if (dateFilter.includes('upcoming')) {
-        return eventDate > today;
+        if (postDate.toDateString() === today.toDateString()) return true;
       }
-      return true;
+      if (dateFilter.includes('past7')) {
+        if (postDate >= past7 && postDate <= today) return true;
+      }
+      return false;
     });
 
-  function handleSearch(event) {
-    setSearch(event.target.value);
+  function handleSearch(post) {
+    setSearch(post.target.value);
   }
 
   function filterOnClickHandler(filter, type) {
@@ -110,8 +104,8 @@ function ManagerEventsComp() {
   return (
     <InnerContainer>
       <div className="title-line">
-        <h1 className="title">Events Manage Panel</h1>
-        <Button linkTo="add">Add Event</Button>
+        <h1 className="title">Posts Manage Panel</h1>
+        <Button linkTo="add">Add Post</Button>
       </div>
       <div className="panel">
         <div className="search">
@@ -130,28 +124,28 @@ function ManagerEventsComp() {
         <table className="table">
           <thead className="thead">
             <tr className="thead-row">
-              <th className="thead-column">Event</th>
+              <th className="thead-column">Post</th>
               <th className="thead-column">Status</th>
               <th className="thead-column">Date</th>
               <th className="thead-column"></th>
             </tr>
           </thead>
           <tbody className="tbody">
-            {filteredData.map((event, index) => (
+            {filteredData.map((post, index) => (
               <tr key={index} className="tbody-row">
-                <td className="tbody-col">{event.title}</td>
+                <td className="tbody-col">{post.title}</td>
                 <td
                   className={`tbody-col tbody-col--flex ${labelEnumToColor(
-                    capitalizeFirstLetter(event.status),
+                    capitalizeFirstLetter(post.status),
                   )}`}
                 >
                   <div className="tbody-col-icon-frame">
-                    {labelEnumToIcon(capitalizeFirstLetter(event.status))}
+                    {labelEnumToIcon(capitalizeFirstLetter(post.status))}
                   </div>
-                  <p>{capitalizeFirstLetter(event.status)}</p>
+                  <p>{capitalizeFirstLetter(post.status)}</p>
                 </td>
                 <td className="tbody-col">
-                  {new Date(event.date).toLocaleDateString()}
+                  {new Date(post.date).toLocaleDateString()}
                 </td>
                 <td className="tbody-col tbody-col--tools">
                   <a className="tbody-col--tools-tool">
@@ -168,7 +162,7 @@ function ManagerEventsComp() {
             <tr className="tfoot-row">
               <td className="tfoot-col" colSpan="4">
                 <p>
-                  Showing {filteredData.length} of {filteredData.length} events
+                  Showing {filteredData.length} of {filteredData.length} posts
                 </p>
               </td>
             </tr>
@@ -219,12 +213,6 @@ function ManagerEventsComp() {
               >
                 Past 7 years
               </p>
-              <p
-                className="filters-group-option color-secondary"
-                onClick={() => filterOnClickHandler('upcoming', 'date')}
-              >
-                Upcoming
-              </p>
             </div>
           </div>
         </aside>
@@ -233,4 +221,4 @@ function ManagerEventsComp() {
   );
 }
 
-export default ManagerEventsComp;
+export default ManagerPostsComp;

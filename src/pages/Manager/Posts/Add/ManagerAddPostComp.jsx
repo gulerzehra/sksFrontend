@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { AddEventContainer } from './AddEvent-styled';
-import CalendarComp from '../../components/Calendar/CalendarComp';
-import ButtonComp from '../../components/Button/Button';
+import { BlogContainer } from './ManagerAddPostComp-styled';
+import ButtonComp from '../../../../components/Button/Button';
 
-function AddEvent() {
+function BlogComp() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -20,10 +19,10 @@ function AddEvent() {
 
   return (
     <div>
-      <h2 style={{ marginTop: '30px', marginLeft: '10px' }}>Add new Event</h2>
+      <h2 style={{ marginTop: '30px', marginLeft: '10px' }}>Add new Post</h2>
 
-      <AddEventContainer>
-        <div className="addEvent">
+      <BlogContainer>
+        <div className="addPost">
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label
               htmlFor="fileInput"
@@ -71,25 +70,24 @@ function AddEvent() {
 
             <input
               type="text"
-              placeholder="Activity Name"
+              placeholder="Post Title"
               style={{
                 width: '300px',
                 height: '40px',
                 borderRadius: '10px',
                 border: '2px solid #E5E5E5',
-                marginBottom: '0px',
               }}
             />
             <p>
-              When naming an activity or event, be clear, concise, relevant,
-              memorable, avoid jargon, offensive language, and check for
-              availability and legal issues.
+              When naming an post, be clear, concise, relevant, memorable, avoid
+              jargon, offensive language, and check for availability and legal
+              issues.
             </p>
             <div className="yatay-cizgi"></div>
 
             <textarea
               className="place"
-              placeholder="Activity Description"
+              placeholder="Post..."
               style={{
                 width: '300px',
                 height: '100px',
@@ -98,66 +96,13 @@ function AddEvent() {
                 resize: 'none',
               }}
             />
-            <div className="yatay-cizgi"></div>
-
-            <input
-              type="text"
-              placeholder="Category"
-              style={{
-                width: '300px',
-                height: '40px',
-                borderRadius: '10px',
-                border: '2px solid #E5E5E5',
-              }}
-            />
-            <div className="yatay-cizgi"></div>
-
-            <input
-              type="text"
-              placeholder="URL"
-              style={{
-                width: '300px',
-                height: '40px',
-                borderRadius: '10px',
-                border: '2px solid #E5E5E5',
-              }}
-            />
-            <div className="yatay-cizgi"></div>
-
-            <h5>DATE: </h5>
-            <CalendarComp />
-            <div className="yatay-cizgi" style={{ marginTop: '10px' }}></div>
-
-            <p style={{ marginTop: '10px' }}>Announcement</p>
-            <input
-              type="text"
-              placeholder="Annoucement"
-              style={{
-                width: '300px',
-                height: '40px',
-                borderRadius: '10px',
-                border: '2px solid #E5E5E5',
-                marginBottom: '10px',
-              }}
-            />
-            <br></br>
-            <input
-              type="text"
-              placeholder="Annoucement Message"
-              style={{
-                width: '300px',
-                height: '40px',
-                borderRadius: '10px',
-                border: '2px solid #E5E5E5',
-              }}
-            />
             <br></br>
             <ButtonComp className="send-button">Send Request</ButtonComp>
           </div>
         </div>
-      </AddEventContainer>
+      </BlogContainer>
     </div>
   );
 }
 
-export default AddEvent;
+export default BlogComp;
