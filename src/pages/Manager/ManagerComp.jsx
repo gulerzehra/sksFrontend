@@ -53,12 +53,12 @@ function ManagerComp() {
                   </div>
                   <p>Add</p>
                 </a>
-                <a className="tbody-col--tools-tool">
+                <Link to="posts" className="tbody-col--tools-tool">
                   <div className="tbody-col--tools-tool-icon-frame">
                     <PencilIcon />
                   </div>
                   <p>Manage</p>
-                </a>
+                </Link>
               </td>
             </tr>
             <tr className="tbody-row">
@@ -70,12 +70,12 @@ function ManagerComp() {
                   </div>
                   <p>Make an Announcement</p>
                 </a>
-                <a className="tbody-col--tools-tool">
+                <Link to="notifications" className="tbody-col--tools-tool">
                   <div className="tbody-col--tools-tool-icon-frame">
                     <PencilIcon />
                   </div>
                   <p>Manage</p>
-                </a>
+                </Link>
               </td>
             </tr>
           </tbody>
