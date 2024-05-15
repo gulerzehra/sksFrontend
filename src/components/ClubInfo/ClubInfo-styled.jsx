@@ -40,17 +40,6 @@ export const ClubInfoContainer = styled.div`
       align-items: flex-start;
       justify-content: space-between;
       gap: 100px;
-
-      button {
-        background-color: #0a58d0;
-        color: #fff;
-        border: none;
-        padding: 13px 35px;
-        border-radius: 20px;
-        cursor: pointer;
-
-        opacity: 0px;
-      }
     }
 
     p {

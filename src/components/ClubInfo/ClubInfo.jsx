@@ -1,6 +1,7 @@
-import React from 'react';
 import { ClubInfoContainer } from './ClubInfo-styled';
-import StepperComp from '../Stepper/StepperComp';
+import Stepper from '../Stepper/StepperComp';
+import Button from '../Button/Button';
+import { DUMMY_DATA_EVENTS as DUMMY_DATA } from '../../data/events';
 
 function ClubInfo() {
   return (
@@ -14,12 +15,12 @@ function ClubInfo() {
           <div className="info">
             <h1>
               Rockstar Games
-              <button>Register</button>
+              <Button size="medium">Register</Button>
             </h1>
             <p>Since 19 May 2021</p>
             <p>
-              Rockstar Games predominantly publishes games in
-              the action-adventure genre, Lorem ipsum dolor sit amet consectetur
+              Rockstar Games predominantly publishes games in the
+              action-adventure genre, Lorem ipsum dolor sit amet consectetur
               adipisicing elit. Dignissimos ea eaque totam pariatur? Dolores
               quibusdam vitae, quidem, quod, quas voluptates quae quia
             </p>
@@ -27,7 +28,7 @@ function ClubInfo() {
         </div>
       </ClubInfoContainer>
 
-      <StepperComp />
+      <Stepper data={DUMMY_DATA} />
     </div>
   );
 }
