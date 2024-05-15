@@ -19,12 +19,12 @@ function ManagerComp() {
             <tr className="tbody-row">
               <td className="tbody-col">Events</td>
               <td className="tbody-col tbody-col--tools">
-                <a className="tbody-col--tools-tool">
+                <Link to="events/add" className="tbody-col--tools-tool">
                   <div className="tbody-col--tools-tool-icon-frame">
                     <PlusIcon />
                   </div>
                   <p>Add</p>
-                </a>
+                </Link>
                 <Link to="events" className="tbody-col--tools-tool">
                   <div className="tbody-col--tools-tool-icon-frame">
                     <PencilIcon />
@@ -47,18 +47,18 @@ function ManagerComp() {
             <tr className="tbody-row">
               <td className="tbody-col">Posts</td>
               <td className="tbody-col tbody-col--tools">
-                <a className="tbody-col--tools-tool">
+                <Link to="posts/add" className="tbody-col--tools-tool">
                   <div className="tbody-col--tools-tool-icon-frame">
                     <PlusIcon />
                   </div>
                   <p>Add</p>
-                </a>
-                <a className="tbody-col--tools-tool">
+                </Link>
+                <Link to="posts" className="tbody-col--tools-tool">
                   <div className="tbody-col--tools-tool-icon-frame">
                     <PencilIcon />
                   </div>
                   <p>Manage</p>
-                </a>
+                </Link>
               </td>
             </tr>
             <tr className="tbody-row">
@@ -70,12 +70,12 @@ function ManagerComp() {
                   </div>
                   <p>Make an Announcement</p>
                 </a>
-                <a className="tbody-col--tools-tool">
+                <Link to="notifications" className="tbody-col--tools-tool">
                   <div className="tbody-col--tools-tool-icon-frame">
                     <PencilIcon />
                   </div>
                   <p>Manage</p>
-                </a>
+                </Link>
               </td>
             </tr>
           </tbody>

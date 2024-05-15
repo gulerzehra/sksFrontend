@@ -9,8 +9,12 @@ import Event from './pages/Events/Event/EventComp';
 import Register from './pages/Register/RegisterComp';
 import Login from './pages/LoginComp/LoginComp';
 import ClubPage from './pages/Clubs/Club/ClubComp';
-import AddEvent from './pages/AddEvent/AddEvent';
-import BlogComp from './pages/Blog/BlogComp';
+import BlogComp from './pages/Manager/Posts/Add/ManagerAddPostComp';
+import Manager from './pages/Manager/ManagerComp';
+import ManagerEvents from './pages/Manager/Events/ManagerEventsComp';
+import ManagerAddEvent from './pages/Manager/Events/Add/ManagerAddEventComp';
+import ManagerPosts from './pages/Manager/Posts/ManagerPostsComp';
+import ManagerNotifications from './pages/Manager/Notifications/ManagerNotificationsComp';
 
 const router = createBrowserRouter([
   {
@@ -27,11 +31,15 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'clubs', element: <Clubs /> },
+      { path: 'clubs/:clubId', element: <ClubPage /> },
       { path: 'events', element: <Events /> },
       { path: 'events/:eventId', element: <Event /> },
-      { path: 'clubs/:clubId', element: <ClubPage /> },
-      { path: 'manage/events/add', element: <AddEvent /> },
+      { path: 'manage', element: <Manager /> },
+      { path: 'manage/events', element: <ManagerEvents /> },
+      { path: 'manage/events/add', element: <ManagerAddEvent /> },
+      { path: 'manage/posts', element: <ManagerPosts /> },
       { path: 'manage/posts/add', element: <BlogComp /> },
+      { path: 'manage/notifications', element: <ManagerNotifications /> },
       // Routes which will be added should be added here, not below of NotFound route
       { path: '*', element: <h1>Not found</h1> },
     ],
