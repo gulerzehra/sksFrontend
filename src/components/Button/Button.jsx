@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from './Button-styled';
 
-function ButtonComp({ children, linkTo, size, variation }) {
+function ButtonComp({ children, linkTo, size, variation, className }) {
   const _buttonComp = (
-    <Button size={size} variation={variation}>
+    <Button size={size} variation={variation} className={className}>
       {children}
     </Button>
   );
@@ -25,6 +25,7 @@ ButtonComp.propTypes = {
   linkTo: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   variation: PropTypes.oneOf(['primary', 'secondary', 'danger']),
+  className: PropTypes.string,
 };
 
 export default ButtonComp;
