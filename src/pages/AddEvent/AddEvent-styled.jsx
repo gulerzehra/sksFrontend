@@ -20,29 +20,23 @@ export const AddEventContainer = styled.div`
   .yatay-cizgi {
     border-bottom: 1px solid black;
     width: 1100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 5px 0 10px 0;
   }
 
   input {
+    font-family: inherit;
     padding-left: 10px;
     font-size: 15px;
   }
   textarea {
+    font-family: inherit;
     padding-left: 15px;
     padding-top: 10px;
-    font-size: 10px;
+    font-size: 14px;
   }
 
   .send-button {
-    background-color: #3b7cff;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    width: 110px;
-    height: 30px;
+    align-self: flex-end;
     margin-top: 10px;
-    font-size: 14px;
-    cursor: pointer;
   }
 `;

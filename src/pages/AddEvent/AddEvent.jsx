@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AddEventContainer } from './AddEvent-styled';
 import CalendarComp from '../../components/Calendar/CalendarComp';
+import ButtonComp from '../../components/Button/Button';
 
 function AddEvent() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,6 +15,7 @@ function AddEvent() {
       setPreviewUrl(reader.result);
     };
     reader.readAsDataURL(file);
+    alert('File uploaded successfully: ' + selectedFile.name); // NOTE: TEMPORARY
   };
 
   return (
@@ -22,7 +24,7 @@ function AddEvent() {
 
       <AddEventContainer>
         <div className="addEvent">
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label
               htmlFor="fileInput"
               style={{
@@ -65,7 +67,7 @@ function AddEvent() {
             <p>
               Please choose only one image; its size should not exceed 20 MB.
             </p>
-            <div class="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div>
 
             <input
               type="text"
@@ -83,7 +85,7 @@ function AddEvent() {
               memorable, avoid jargon, offensive language, and check for
               availability and legal issues.
             </p>
-            <div class="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div>
 
             <textarea
               className="place"
@@ -96,7 +98,7 @@ function AddEvent() {
                 resize: 'none',
               }}
             />
-            <div class="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div>
 
             <input
               type="text"
@@ -108,7 +110,7 @@ function AddEvent() {
                 border: '2px solid #E5E5E5',
               }}
             />
-            <div class="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div>
 
             <input
               type="text"
@@ -120,16 +122,16 @@ function AddEvent() {
                 border: '2px solid #E5E5E5',
               }}
             />
-            <div class="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div>
 
             <h5>DATE: </h5>
             <CalendarComp />
-            <div class="yatay-cizgi" style={{ marginTop: '10px' }}></div>
+            <div className="yatay-cizgi" style={{ marginTop: '10px' }}></div>
 
-            <p style={{ marginTop: '10px' }}>Announcment</p>
+            <p style={{ marginTop: '10px' }}>Announcement</p>
             <input
               type="text"
-              placeholder="Annoucment"
+              placeholder="Annoucement"
               style={{
                 width: '300px',
                 height: '40px',
@@ -141,7 +143,7 @@ function AddEvent() {
             <br></br>
             <input
               type="text"
-              placeholder="Annoucment Message"
+              placeholder="Annoucement Message"
               style={{
                 width: '300px',
                 height: '40px',
@@ -150,7 +152,7 @@ function AddEvent() {
               }}
             />
             <br></br>
-            <button className="send-button">Send Request</button>
+            <ButtonComp className="send-button">Send Request</ButtonComp>
           </div>
         </div>
       </AddEventContainer>
