@@ -8,9 +8,9 @@ import Events from './pages/Events/EventsComp';
 import Event from './pages/Events/Event/EventComp';
 import Register from './pages/Register/RegisterComp';
 import Login from './pages/LoginComp/LoginComp';
-import ClubPage from './pages/ClubPageComp/ClubPage';
+import ClubPage from './pages/Clubs/Club/ClubComp';
 import AddEvent from './pages/AddEvent/AddEvent';
-import BlogComp from './pages/BlogPage/BlogComp';
+import BlogComp from './pages/Blog/BlogComp';
 
 const router = createBrowserRouter([
   {
@@ -29,12 +29,9 @@ const router = createBrowserRouter([
       { path: 'clubs', element: <Clubs /> },
       { path: 'events', element: <Events /> },
       { path: 'events/:eventId', element: <Event /> },
-      {
-        path: '/club',
-        element: <ClubPage />,
-      },
-      { path: '/addevent', element: <AddEvent /> },
-      { path: '/addblog', element: <BlogComp /> },
+      { path: 'clubs/:clubId', element: <ClubPage /> },
+      { path: 'manage/events/add', element: <AddEvent /> },
+      { path: 'manage/posts/add', element: <BlogComp /> },
       // Routes which will be added should be added here, not below of NotFound route
       { path: '*', element: <h1>Not found</h1> },
     ],
