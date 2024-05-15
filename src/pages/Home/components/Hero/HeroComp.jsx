@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { DUMMY_DATA_SLIDERS as DUMMY_DATA } from '../../../../data/sliders';
 import { SLIDER_TRANSITION_TIME } from '../../../../utils/constants';
-import ButtonComp from '../../../../components/Button/Button';
+import Button from '../../../../components/Button/Button';
 
 DUMMY_DATA.sort((a, b) => a.time.localeCompare(b.time));
 
@@ -77,7 +77,7 @@ function HeroComp() {
         <div className="content">
           <h2 className="content-club">{DUMMY_DATA[current].club}</h2>
           <h1 className="content-title">{DUMMY_DATA[current].title}</h1>
-          <ButtonComp variation="small">Learn More</ButtonComp>
+          <Button size="medium">Learn More</Button>
         </div>
         <div className="progress-frame">
           {/* {DUMMY_DATA.map((item, index) => (
