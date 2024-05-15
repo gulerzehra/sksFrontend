@@ -2,6 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { LoginPageContainer, SignInForm, LoginInfo } from './LoginComp-styled';
 import { useState, useEffect, useRef } from 'react';
 import Button from '../../components/Button/Button';
+import { login } from '../../data/data';
+import {
+  PASSWORD_MINIMUM_LENGTH,
+  USERNAME_MINIMUM_LENGTH,
+} from '../../utils/constants';
+import { store } from '../../data/store';
+import { loginSuccess } from '../../data/userSlice';
+import { useSelector } from 'react-redux';
 
 function LoginComp() {
   const navigate = useNavigate();
@@ -10,9 +18,11 @@ function LoginComp() {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
+  const { isLoggedIn } = useSelector((state) => state.user);
+
   const validateUsername = (username) => {
     const isValid = username.length;
-    if (isValid >= 8) {
+    if (isValid >= USERNAME_MINIMUM_LENGTH) {
       setUsernameIsValid(false);
       return false;
     } else {
@@ -23,7 +33,7 @@ function LoginComp() {
 
   const validatePassword = (password, setPasswordIsValid) => {
     const isValid = password.length;
-    if (isValid >= 8) {
+    if (isValid >= PASSWORD_MINIMUM_LENGTH) {
       setPasswordIsValid(false);
       return false;
     } else {
@@ -44,10 +54,47 @@ function LoginComp() {
     }
   }
 
+  async function loginHandler() {
+    // if (validateUsername(username) || validatePassword(password)) {
+    //   alert('Please enter a valid username and password');
+    // } else {
+    //   alert('Login successful');
+    //   navigate('/');
+    // }
+    const response = await login(username, password);
+    const {
+      access: accessToken,
+      refresh: refreshToken,
+      user_id,
+      role,
+    } = response;
+    if (!accessToken) {
+      alert('Login failed');
+      return;
+    }
+    store.dispatch(loginSuccess({ accessToken, refreshToken, user_id, role }));
+    navigate('/');
+    // if (accessToken) {
+    //   localStorage.setItem('accessToken', accessToken);
+    //   localStorage.setItem('refreshToken', refreshToken);
+    //   localStorage.setItem('user', JSON.stringify(user));
+    //   localStorage.setItem('role', role);
+    //   navigate('/');
+    // } else {
+    //   alert('Login failed');
+    // }
+  }
+
   useEffect(() => {
     document.querySelector('body').style.backgroundColor = '#fff';
     document.querySelector('body').style.color = '#000';
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div>
@@ -100,7 +147,11 @@ function LoginComp() {
               </button>
             </p>
 
-            <Button size="medium" className="login-button">
+            <Button
+              size="medium"
+              className="login-button"
+              onClick={loginHandler}
+            >
               Login
             </Button>
           </SignInForm>
