@@ -2,15 +2,15 @@ import styled, { css } from 'styled-components';
 
 const sizes = {
   small: css`
-    padding: 8px 16px;
+    padding: 6px 16px;
     font-size: 14px;
   `,
   medium: css`
-    padding: 12px 24px;
+    padding: 9px 24px;
     font-size: 16px;
   `,
   large: css`
-    padding: 16px 32px;
+    padding: 12px 32px;
     font-size: 18px;
   `,
 };
