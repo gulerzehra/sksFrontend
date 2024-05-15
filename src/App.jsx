@@ -15,6 +15,7 @@ import ManagerEvents from './pages/Manager/Events/ManagerEventsComp';
 import ManagerAddEvent from './pages/Manager/Events/Add/ManagerAddEventComp';
 import ManagerPosts from './pages/Manager/Posts/ManagerPostsComp';
 import ManagerNotifications from './pages/Manager/Notifications/ManagerNotificationsComp';
+import Admin from './pages/Admin/AdminComp';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: 'manage/posts', element: <ManagerPosts /> },
       { path: 'manage/posts/add', element: <ManagerAddComp /> },
       { path: 'manage/notifications', element: <ManagerNotifications /> },
+      { path: 'admin', element: <Admin /> },
       // Routes which will be added should be added here, not below of NotFound route
       { path: '*', element: <h1>Not found</h1> },
     ],
