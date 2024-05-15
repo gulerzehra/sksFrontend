@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BlogContainer } from './BlogComp-styled';
+import ButtonComp from '../../components/Button/Button';
 
 function BlogComp() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,6 +14,7 @@ function BlogComp() {
       setPreviewUrl(reader.result);
     };
     reader.readAsDataURL(file);
+    alert('File uploaded successfully: ' + selectedFile.name); // NOTE: TEMPORARY
   };
 
   return (
@@ -21,7 +23,7 @@ function BlogComp() {
 
       <BlogContainer>
         <div className="addPost">
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label
               htmlFor="fileInput"
               style={{
@@ -64,7 +66,7 @@ function BlogComp() {
             <p>
               Please choose only one image; its size should not exceed 20 MB.
             </p>
-            <div class="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div>
 
             <input
               type="text"
@@ -81,7 +83,7 @@ function BlogComp() {
               jargon, offensive language, and check for availability and legal
               issues.
             </p>
-            <div class="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div>
 
             <textarea
               className="place"
@@ -95,7 +97,7 @@ function BlogComp() {
               }}
             />
             <br></br>
-            <button className="send-button">Send Request</button>
+            <ButtonComp className="send-button">Send Request</ButtonComp>
           </div>
         </div>
       </BlogContainer>
