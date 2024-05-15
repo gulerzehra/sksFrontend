@@ -7,7 +7,7 @@ import Clubs from './pages/Clubs/ClubsComp';
 import Events from './pages/Events/EventsComp';
 import Event from './pages/Events/Event/EventComp';
 import Register from './pages/Register/RegisterComp';
-import Login from './pages/LoginComp/LoginComp';
+import Login from './pages/Login/LoginComp';
 import ClubPage from './pages/Clubs/Club/ClubComp';
 import BlogComp from './pages/Manager/Posts/Add/ManagerAddPostComp';
 import Manager from './pages/Manager/ManagerComp';
