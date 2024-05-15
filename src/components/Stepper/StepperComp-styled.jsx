@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const StepperContainer = styled.div`
   .container {
-    width: 50%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
   }
 
   .step {
@@ -28,10 +30,10 @@ export const StepperContainer = styled.div`
   }
 
   .step .line {
-    top: 23px;
+    top: -10px;
     left: 12px;
     /*   height: 120px; */
-    height: 100%;
+    height: 180px;
 
     position: absolute;
     border-left: 3px solid black;
@@ -82,5 +84,22 @@ export const StepperContainer = styled.div`
     font-size: 15px !important;
     color: #000 !important;
     font-family: Arial !important;
+  }
+  .steps {
+    display: flex;
+    flex-direction: column;
+  }
+  .img {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    img {
+      width: 98%;
+      height: 40%;
+      object-fit: cover;
+      align-items: right;
+      border-radius: 15px;
+    }
   }
 `;

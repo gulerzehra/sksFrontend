@@ -59,7 +59,7 @@ function LoginComp() {
           <SingInForm>
             <input
               type="name"
-              placeholder="username"
+              placeholder="Username"
               onKeyDown={EnterNextClick}
               value={username}
               onBlur={() => validateUsername(username)}
@@ -74,7 +74,7 @@ function LoginComp() {
 
             <input
               type="password"
-              placeholder="password"
+              placeholder="Password"
               ref={passwordInputRef}
               value={password}
               onBlur={() => validatePassword(password, setPasswordIsValid)}

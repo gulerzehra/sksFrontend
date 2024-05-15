@@ -119,5 +119,6 @@ export const SingUpForm = styled.div`
     cursor: pointer; /* Butona imlecin değişmesini sağlar */
     font-weight: 500; /* Butonun metin kalınlığını artırır */
     font-size: 16px; /* Butonun metin boyutunu büyütür */
+    padding-left: 5px; /* Butonun solundan boşluk bırakır */
   }
 `;

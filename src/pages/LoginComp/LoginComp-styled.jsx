@@ -42,7 +42,7 @@ export const LoginInfo = styled.div`
     p {
       color: #000000;
       font-family: 'Poppins', sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       font-style: normal;
       font-weight: 400;
       // line-height: normal;
@@ -64,7 +64,7 @@ export const SingInForm = styled.div`
 
   p {
     display: flex;
-    align-items: flex-start;
+    //align-items: flex-start;
     margin: 14px;
     color: #747775;
     font-family: ubuntu-condensed;
@@ -110,5 +110,9 @@ export const SingInForm = styled.div`
     border: none;
     cursor: pointer;
     align-self: center;
+  }
+  .register {
+    padding-left: 5px;
+    font-size: 15px;
   }
 `;

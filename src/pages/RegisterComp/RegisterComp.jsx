@@ -83,7 +83,7 @@ function RegisterComp() {
           <SingUpForm>
             <input
               type="text"
-              placeholder="username"
+              placeholder="Username"
               onKeyDown={(e) => e.keyCode === 13 && usernameRef.current.focus()}
               value={username}
               onBlur={() => validateName(username, setUsernameIsValid)}
@@ -103,7 +103,7 @@ function RegisterComp() {
 
             <input
               type="email"
-              placeholder="email"
+              placeholder="Email"
               ref={emailRef}
               onKeyDown={(e) => e.keyCode === 13 && passwordRef.current.focus()}
               value={email}
@@ -121,7 +121,7 @@ function RegisterComp() {
 
             <input
               type="password"
-              placeholder="password"
+              placeholder="Password"
               ref={passwordRef}
               onKeyDown={(e) => e.keyCode === 13 && confirmRef.current.focus()}
               value={password}
@@ -143,7 +143,7 @@ function RegisterComp() {
 
             <input
               type="password"
-              placeholder="password confirm"
+              placeholder="Password confirm"
               ref={confirmRef}
               value={passwordconfirm}
               onBlur={() => checkPasswordsMatch()}
@@ -155,7 +155,7 @@ function RegisterComp() {
             />
 
             <p>
-              Zaten hesabın var mı?
+              If you already have an account:
               <button className="login" onClick={loginPageButton}>
                 Login
               </button>
