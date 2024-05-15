@@ -1,12 +1,12 @@
-import React from 'react';
 import {
   RegisterPageContainer,
-  SingUpForm,
+  SignUpForm,
   RegisterInfo,
 } from './RegisterComp-styled';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 
 function RegisterComp() {
   const navigate = useNavigate();
@@ -68,6 +68,11 @@ function RegisterComp() {
     navigate('/login');
   }
 
+  useEffect(() => {
+    document.querySelector('body').style.backgroundColor = '#fff';
+    document.querySelector('body').style.color = '#000';
+  }, []);
+
   return (
     <div>
       <RegisterPageContainer>
@@ -80,7 +85,7 @@ function RegisterComp() {
           </RegisterInfo>
         </div>
         <div className="login-form-container">
-          <SingUpForm>
+          <SignUpForm>
             <input
               type="text"
               placeholder="Username"
@@ -93,7 +98,7 @@ function RegisterComp() {
               id="username"
               style={
                 usernameIsValid
-                  ? { border: '1px solid red' }
+                  ? { border: '1px solid var(--color-danger)' }
                   : { border: '1px solid #e0e0e0' }
               }
             />
@@ -114,7 +119,7 @@ function RegisterComp() {
               id="email"
               style={
                 emailIsValid
-                  ? { border: '1px solid red' }
+                  ? { border: '1px solid var(--color-danger)' }
                   : { border: '1px solid #e0e0e0' }
               }
             />
@@ -132,7 +137,7 @@ function RegisterComp() {
               id="password"
               style={
                 passwordIsValid
-                  ? { border: '1px solid red' }
+                  ? { border: '1px solid var(--color-danger)' }
                   : { border: '1px solid #e0e0e0' }
               }
             />
@@ -151,7 +156,9 @@ function RegisterComp() {
                 setPasswordconfirm(e.target.value);
               }}
               id="passwordconfirm"
-              style={{ borderColor: passwordMatch ? 'red' : '#e0e0e0' }}
+              style={{
+                borderColor: passwordMatch ? 'var(--color-danger)' : '#e0e0e0',
+              }}
             />
 
             <p>
@@ -161,8 +168,8 @@ function RegisterComp() {
               </button>
             </p>
 
-            <button className="register-button">REGISTER</button>
-          </SingUpForm>
+            <Button className="register-button">Sign up</Button>
+          </SignUpForm>
         </div>
       </RegisterPageContainer>
     </div>

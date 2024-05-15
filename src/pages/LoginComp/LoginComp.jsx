@@ -1,7 +1,7 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginPageContainer, SingInForm, LoginInfo } from './LoginComp-styled';
-import { useState, useRef } from 'react';
+import { LoginPageContainer, SignInForm, LoginInfo } from './LoginComp-styled';
+import { useState, useEffect, useRef } from 'react';
+import Button from '../../components/Button/Button';
 
 function LoginComp() {
   const navigate = useNavigate();
@@ -44,6 +44,11 @@ function LoginComp() {
     }
   }
 
+  useEffect(() => {
+    document.querySelector('body').style.backgroundColor = '#fff';
+    document.querySelector('body').style.color = '#000';
+  }, []);
+
   return (
     <div>
       <LoginPageContainer>
@@ -51,12 +56,12 @@ function LoginComp() {
           <LoginInfo>
             <div className="infodiv">
               <h1>LOGIN</h1>
-              <p>Welcome back! Let's pick up where you left off.</p>
+              <p>Welcome back! Let&apos;s pick up where you left off.</p>
             </div>
           </LoginInfo>
         </div>
         <div className="login-form-container">
-          <SingInForm>
+          <SignInForm>
             <input
               type="name"
               placeholder="Username"
@@ -68,7 +73,9 @@ function LoginComp() {
                 setUsername(e.target.value);
               }}
               style={{
-                border: usernameIsValid ? '1px solid red' : '1px solid #E5E5E5',
+                border: usernameIsValid
+                  ? '1px solid var(--color-danger)'
+                  : '1px solid #E5E5E5',
               }}
             />
 
@@ -80,20 +87,21 @@ function LoginComp() {
               onBlur={() => validatePassword(password, setPasswordIsValid)}
               onChange={(e) => setPassword(e.target.value)}
               style={{
-                border: passwordIsValid ? '1px solid red' : '1px solid #E5E5E5',
+                border: passwordIsValid
+                  ? '1px solid var(--color-danger)'
+                  : '1px solid #E5E5E5',
               }}
             />
 
             <p>
-              {' '}
               Don’t have an account?
               <button className="register" onClick={registerPageButton}>
-                Register{' '}
+                Register
               </button>
             </p>
 
-            <button className="login-button">LOGIN</button>
-          </SingInForm>
+            <Button className="login-button">Login</Button>
+          </SignInForm>
         </div>
       </LoginPageContainer>
     </div>

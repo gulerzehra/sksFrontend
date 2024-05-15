@@ -52,7 +52,7 @@ export const LoginInfo = styled.div`
   }
 `;
 
-export const SingInForm = styled.div`
+export const SignInForm = styled.div`
   width: 500px; /* Sabit genişlik */
   /* position: fixed; Sabit kalma özelliği */
   right: 200px; /* Sayfanın sağından 100px uzaklıkta */
@@ -67,7 +67,6 @@ export const SingInForm = styled.div`
     //align-items: flex-start;
     margin: 14px;
     color: #747775;
-    font-family: ubuntu-condensed;
   }
 
   input {
@@ -111,6 +110,7 @@ export const SingInForm = styled.div`
     cursor: pointer;
     align-self: center;
   }
+
   .register {
     padding-left: 5px;
     font-size: 15px;

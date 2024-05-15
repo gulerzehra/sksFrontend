@@ -51,7 +51,7 @@ export const RegisterInfo = styled.div`
   }
 `;
 
-export const SingUpForm = styled.div`
+export const SignUpForm = styled.div`
   width: 500px; /* Sabit genişlik */
   /* position: fixed; Sabit kalma özelliği */
   right: 200px; /* Sayfanın sağından 100px uzaklıkta */
@@ -66,14 +66,12 @@ export const SingUpForm = styled.div`
     display: flex;
     // margin:14px;
     color: #747775;
-    font-family: ubuntu-condensed;
     margin-left: 15px;
   }
 
   label {
     display: flex;
     color: #747775;
-    font-family: ubuntu-condensed;
     margin-left: 15px;
     margin-top: 7px;
   }
