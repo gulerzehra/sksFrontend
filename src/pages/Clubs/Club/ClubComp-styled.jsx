@@ -16,6 +16,7 @@ export const Blog = styled.div`
     border-radius: 25px;
     width: 373px;
     height: 300px;
+    padding-top: 10px;
     button {
       border: none;
       background: none;
@@ -24,5 +25,13 @@ export const Blog = styled.div`
     p {
       padding: 5px;
     }
+    img {
+      overflow: hidden;
+      border-radius: 0 0 25px 25px;
+    }
+  }
+
+  a {
+    color: blue;
   }
 `;

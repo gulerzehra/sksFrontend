@@ -1,6 +1,5 @@
-import React from 'react';
-import ClubInfo from '../../components/ClubInfo/ClubInfo'; // ClubInfo bileşenini içe aktar
-import { Blog } from './ClubPage-styled';
+import ClubInfo from '../../../components/ClubInfo/ClubInfo'; // ClubInfo bileşenini içe aktar
+import { Blog } from './ClubComp-styled';
 
 function ClubPage() {
   return (
@@ -16,11 +15,7 @@ function ClubPage() {
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
               Recusandae itaque libero nesciunt debitis corrupti fuga non
               obcaecati, velit quae error cupiditate nostrum quas nobis facere
-              et dolorum delectus consequatur mollitia.
-            </p>
-            <p style={{ paddingTop: '0px' }}>
-              {' '}
-              Lorem ipsum dolor sit amet. <button>Read More</button>
+              et dolorum delectus consequatur mollitia. <a>Read More</a>
             </p>
 
             <img
@@ -34,11 +29,7 @@ function ClubPage() {
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
               Recusandae itaque libero nesciunt debitis corrupti fuga non
               obcaecati, velit quae error cupiditate nostrum quas nobis facere
-              et dolorum delectus consequatur mollitia.
-            </p>
-            <p style={{ paddingTop: '0px' }}>
-              {' '}
-              Lorem ipsum dolor sit amet. <button>Read More</button>
+              et dolorum delectus consequatur mollitia. <a>Read More</a>
             </p>
 
             <img
@@ -52,11 +43,7 @@ function ClubPage() {
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
               Recusandae itaque libero nesciunt debitis corrupti fuga non
               obcaecati, velit quae error cupiditate nostrum quas nobis facere
-              et dolorum delectus consequatur mollitia.
-            </p>
-            <p style={{ paddingTop: '0px' }}>
-              {' '}
-              Lorem ipsum dolor sit amet. <button>Read More</button>
+              et dolorum delectus consequatur mollitia. <a>Read More</a>
             </p>
 
             <img
