@@ -96,18 +96,6 @@ export const SignInForm = styled.div`
   }
 
   .login-button {
-    width: 143px;
-    height: 46px;
-    border-radius: 25px;
-    background: #0a58d0;
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    border: none;
-    cursor: pointer;
     align-self: center;
   }
 

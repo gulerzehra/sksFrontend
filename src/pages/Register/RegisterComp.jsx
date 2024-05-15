@@ -168,7 +168,9 @@ function RegisterComp() {
               </button>
             </p>
 
-            <Button className="register-button">Sign up</Button>
+            <Button size="medium" className="register-button">
+              Sign up
+            </Button>
           </SignUpForm>
         </div>
       </RegisterPageContainer>

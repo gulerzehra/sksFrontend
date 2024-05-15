@@ -100,7 +100,9 @@ function LoginComp() {
               </button>
             </p>
 
-            <Button className="login-button">Login</Button>
+            <Button size="medium" className="login-button">
+              Login
+            </Button>
           </SignInForm>
         </div>
       </LoginPageContainer>
