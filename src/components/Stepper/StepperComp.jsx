@@ -1,53 +1,50 @@
+import { Link } from 'react-router-dom';
 import { StepperContainer } from './StepperComp-styled';
 import PropTypes from 'prop-types';
 
-function StepComp({ children }) {
+function StepComp({ children, id }) {
   return (
     <div className="step">
       <div className="v-stepper">
         <div className="circle" />
         <div className="line" />
       </div>
-      <div className="content">{children}</div>
+      <div className="content">
+        {children}
+        <Link to={`/events/${id}`}>View More</Link>
+      </div>
     </div>
   );
 }
 
 StepComp.propTypes = {
   children: PropTypes.node.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
-function StepperComp({ data, children }) {
+function StepperComp({ posts, children }) {
+  console.log(posts);
+  if (!posts) return null;
   return (
     <StepperContainer>
       <h2 style={{ marginLeft: '20px' }}>Following Events</h2>
       <div className="container">
         <div className="steps">
-          {data.slice(0, 4).map((item, index) => (
-            <StepComp
-              key={index}
-            >{`${item.title}: ${item.description}`}</StepComp>
+          {posts.slice(0, 4).map((item, index) => (
+            <StepComp key={index} id={item?.id}>
+              {item?.content}
+            </StepComp>
           ))}
         </div>
 
-        <div className="img">
-          {children}
-          <img
-            src="https://cdn.pixabay.com/photo/2016/02/10/21/59/landscape-1192669_1280.jpg"
-            alt=""
-          />
-          <img
-            src="https://cdn.pixabay.com/photo/2016/02/10/21/59/landscape-1192669_1280.jpg"
-            alt=""
-          />
-        </div>
+        <div className="img">{children}</div>
       </div>
     </StepperContainer>
   );
 }
 
 StepperComp.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   children: PropTypes.node.isRequired,
 };
 
