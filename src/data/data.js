@@ -1,4 +1,4 @@
-import { API_URL } from '../utils/constants';
+import { API_URL, ROLE_REGISTERED_USER } from '../utils/constants';
 
 export async function refreshToken(token) {
   const data = await fetch(`${API_URL}/token/refresh/`, {
@@ -28,7 +28,7 @@ export async function register(username, password) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, role: ROLE_REGISTERED_USER }),
   });
   return data.json();
 }
