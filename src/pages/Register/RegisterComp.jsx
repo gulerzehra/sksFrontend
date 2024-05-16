@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
+import { register } from '../../data/data';
+import { PASSWORD_MINIMUM_LENGTH } from '../../utils/constants';
 
 function RegisterComp() {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ function RegisterComp() {
   const checkPasswordsMatch = () => {
     const isValid = passwordconfirm.length;
     const match = password === passwordconfirm;
-    if (isValid >= 8 && match) {
+    if (isValid >= PASSWORD_MINIMUM_LENGTH && match) {
       setPasswordMatch(false);
       return false;
     } else {
@@ -51,7 +53,7 @@ function RegisterComp() {
 
   const validatePassword = (password, setPasswordIsValid) => {
     const isValid = password.length;
-    if (isValid >= 8) {
+    if (isValid >= PASSWORD_MINIMUM_LENGTH) {
       setPasswordIsValid(false);
       return false;
     } else {
@@ -66,6 +68,16 @@ function RegisterComp() {
 
   function loginPageButton() {
     navigate('/login');
+  }
+
+  async function signUpHandler() {
+    try {
+      await register(username, password);
+      navigate('/login');
+    } catch (error) {
+      console.error(error);
+      alert('Registration failed');
+    }
   }
 
   useEffect(() => {
@@ -168,7 +180,11 @@ function RegisterComp() {
               </button>
             </p>
 
-            <Button size="medium" className="register-button">
+            <Button
+              size="medium"
+              className="register-button"
+              onClick={signUpHandler}
+            >
               Sign up
             </Button>
           </SignUpForm>
