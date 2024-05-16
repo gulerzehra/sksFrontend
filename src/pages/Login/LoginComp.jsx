@@ -85,10 +85,10 @@ function LoginComp() {
     // }
   }
 
-  useEffect(() => {
-    document.querySelector('body').style.backgroundColor = '#fff';
-    document.querySelector('body').style.color = '#000';
-  }, []);
+  // useEffect(() => {
+  //   document.querySelector('body').style.backgroundColor = '#fff';
+  //   document.querySelector('body').style.color = '#000';
+  // }, []);
 
   useEffect(() => {
     if (isLoggedIn) {
