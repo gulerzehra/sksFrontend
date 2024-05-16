@@ -26,9 +26,14 @@ import PropTypes from 'prop-types';
 import { DUMMY_DATA_NOTIFICATIONS as DUMMY_DATA } from '../../data/notifications';
 import { useSelector } from 'react-redux';
 import { getNotifications } from '../../data/data';
-import { ROLE_REGISTERED_USER } from '../../utils/constants';
+import {
+  ROLE_CLUB_MANAGER,
+  ROLE_REGISTERED_USER,
+  ROLE_SKS_ADMIN,
+} from '../../utils/constants';
 import { store } from '../../data/store';
 import { fetchNotifications } from '../../data/notificationSlice';
+import { logout } from '../../data/userSlice';
 
 DUMMY_DATA.sort((a, b) => b.id - a.id);
 
@@ -109,7 +114,7 @@ function User() {
               notifications.map((notification) => (
                 <Notification
                   key={notification.id}
-                  club="<Club Name>"
+                  club={`Event: ${notification.post}`}
                   description={notification.message}
                 />
               ))
@@ -119,7 +124,12 @@ function User() {
           </HeaderUserPanelUserItemNotifications>
         )}
       </HeaderUserPanelUserItem>
-      <HeaderUserPanelUserItem className="divider">
+      <HeaderUserPanelUserItem
+        className="divider"
+        onClick={() => {
+          store.dispatch(logout());
+        }}
+      >
         <Link to="/login">Logout</Link>
       </HeaderUserPanelUserItem>
     </HeaderUserPanelUser>
@@ -127,6 +137,8 @@ function User() {
 }
 
 function HeaderComp() {
+  const { role } = useSelector((state) => state.user);
+
   return (
     <Header>
       <Link to="/" className="header__logo">
@@ -143,6 +155,16 @@ function HeaderComp() {
           <HeaderNavItem>
             <Link to="/events">Events</Link>
           </HeaderNavItem>
+          {role === ROLE_CLUB_MANAGER && (
+            <HeaderNavItem>
+              <Link to="/manage">Manage</Link>
+            </HeaderNavItem>
+          )}
+          {role === ROLE_SKS_ADMIN && (
+            <HeaderNavItem>
+              <Link to="/admin">Admin</Link>
+            </HeaderNavItem>
+          )}
         </HeaderNavList>
       </HeaderNav>
       <HeaderUserPanel>
