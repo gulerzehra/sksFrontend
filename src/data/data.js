@@ -78,14 +78,14 @@ export async function toggleClub(token, id) {
   return data.json();
 }
 
-export async function updateManagerOfClub(token, id) {
-  const data = await fetch(`${API_URL}/clubs/update-manager/${id}/`, {
+export async function updateManagerOfClub(token, clubId, managerId) {
+  const data = await fetch(`${API_URL}/clubs/update-manager/${clubId}/`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ new_manager_id: id }),
+    body: JSON.stringify({ manager: managerId }),
   });
   return data.json();
 }
