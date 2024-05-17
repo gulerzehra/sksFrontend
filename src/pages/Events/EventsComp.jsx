@@ -101,10 +101,17 @@ function EventsLineComp({ title, events, children }) {
   }
 
   const filteredEvents = events.filter((event) => {
-    if (selectedCategories.length === 0) return true;
-    return selectedCategories
-      .map((category) => category.toLowerCase())
-      .includes(event.tag);
+    const isCategoryMatch =
+      selectedCategories.length === 0 ||
+      selectedCategories
+        .map((category) => category.toLowerCase())
+        .includes(event.tag);
+
+    const isDateMatch =
+      !selectedDate ||
+      new Date(event.created_at).toDateString() === selectedDate.toDateString();
+
+    return isCategoryMatch && isDateMatch;
   });
 
   return (
@@ -184,14 +191,6 @@ function EventsLineComp({ title, events, children }) {
 
       <Events>
         {filteredEvents.map((event) => (
-          // <EventComp
-          //   key={event.id}
-          //   id={event.id}
-          //   title={event.title}
-          //   address={event.address}
-          //   date={event.date}
-          //   img={event.img}
-          // />
           <Link
             key={event.id}
             to={`/events/${event.id}`}
