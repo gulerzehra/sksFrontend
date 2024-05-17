@@ -1,13 +1,14 @@
 import { Hero } from './HeroComp-styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInterval } from '../../../../hooks/useInterval';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { DUMMY_DATA_SLIDERS as DUMMY_DATA } from '../../../../data/sliders';
 import { SLIDER_TRANSITION_TIME } from '../../../../utils/constants';
-import ButtonComp from '../../../../components/Button/Button';
-
-DUMMY_DATA.sort((a, b) => a.time.localeCompare(b.time));
+import Button from '../../../../components/Button/Button';
+import { useSelector } from 'react-redux';
+import { store } from '../../../../data/store';
+import { getApprovedEvents } from '../../../../data/data';
+import { fetchEvents } from '../../../../data/eventSlice';
 
 /**
  * @deprecated This component is deprecated and will be removed in the future.
@@ -54,9 +55,11 @@ function ProgressBarAnimatedComp() {
 
 function HeroComp() {
   const [current, setCurrent] = useState(0);
+  const { events: eventsAll } = useSelector((state) => state.event);
+  const events = eventsAll?.slice(-4);
 
   const { reset } = useInterval(() => {
-    setCurrent((prev) => (prev === DUMMY_DATA.length - 1 ? 0 : prev + 1));
+    setCurrent((prev) => (prev === events.length - 1 ? 0 : prev + 1));
   }, SLIDER_TRANSITION_TIME * 1000);
 
   function handleProgressClick(index) {
@@ -64,26 +67,38 @@ function HeroComp() {
     reset(SLIDER_TRANSITION_TIME * 1000);
   }
 
+  useEffect(() => {
+    async function eventsHandler() {
+      const response = await getApprovedEvents();
+      store.dispatch(fetchEvents(response));
+    }
+    eventsHandler();
+  }, []);
+
   return (
     <Hero>
       <div className="img-frame">
-        <img
-          className="img"
-          src={DUMMY_DATA[current].img}
-          alt={DUMMY_DATA[current].title}
-        />
+        {events && (
+          <img
+            className="img"
+            src="https://placehold.co/600x400"
+            alt={events[current]?.name}
+          />
+        )}
       </div>
       <div className="content-frame">
         <div className="content">
-          <h2 className="content-club">{DUMMY_DATA[current].club}</h2>
-          <h1 className="content-title">{DUMMY_DATA[current].title}</h1>
-          <ButtonComp variation="small">Learn More</ButtonComp>
+          <h2 className="content-club">{events[current]?.club_name}</h2>
+          <h1 className="content-title">{events[current]?.name}</h1>
+          <Button size="medium" linkTo={`clubs/${events[current]?.club_slug}`}>
+            Learn More
+          </Button>
         </div>
         <div className="progress-frame">
-          {/* {DUMMY_DATA.map((item, index) => (
+          {/* {events.map((item, index) => (
             <ProgressBarCompOld current={current} index={index} key={item.id} />
           ))} */}
-          {DUMMY_DATA.map((item, index) => {
+          {events.map((item, index) => {
             if (current === index) {
               return <ProgressBarAnimatedComp key={item.id} />;
             }

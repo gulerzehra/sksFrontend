@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../../components/Button/Button';
 import { CheckCircleIcon } from '../../../components/Icons/CheckCircleIcon';
 import { ExclamationCircleIcon } from '../../../components/Icons/ExclamationCircleIcon';
 import { MagnifyingGlassIcon } from '../../../components/Icons/MagnifyingGlassIcon';
-import { PencilIcon } from '../../../components/Icons/PencilIcon';
+// import { PencilIcon } from '../../../components/Icons/PencilIcon';
 import { XCircleIcon } from '../../../components/Icons/XCircleIcon';
-import { DUMMY_DATA_EVENTS as DUMMY_DATA } from '../../../data/events';
 import { InnerContainer } from './ManagerEventsComp-styled';
-import { TABLE_RESULTS_PER_PAGE } from '../../../utils/constants';
-
-DUMMY_DATA.sort((a, b) => a.date.localeCompare(b.date));
-
-const data = DUMMY_DATA.filter((event) => event.type === 'club');
+import {
+  ROLE_CLUB_MANAGER,
+  TABLE_RESULTS_PER_PAGE,
+} from '../../../utils/constants';
+import { useSelector } from 'react-redux';
+import { getPosts } from '../../../data/data';
+import { store } from '../../../data/store';
+import { fetchPosts } from '../../../data/postSlice';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -64,12 +66,31 @@ function ManagerEventsComp() {
     'rejected',
   ]);
   const [dateFilter, setDateFilter] = useState(['today', 'past7', 'upcoming']);
+  const { isLoggedIn, role, accessToken, user_id } = useSelector(
+    (state) => state.user,
+  );
+  const { posts } = useSelector((state) => state.post);
+  console.log(posts);
+  // find the posts that are related to the user
+  const userPosts = posts.filter((post) => post.author_id === user_id);
+  console.log(userPosts);
 
-  const filteredData = data
-    .filter((event) => event.title.toLowerCase().includes(search.toLowerCase()))
+  useEffect(() => {
+    if (!isLoggedIn || role !== ROLE_CLUB_MANAGER) return;
+    async function postsHandler() {
+      const response = await getPosts(accessToken);
+      store.dispatch(fetchPosts(response));
+    }
+    postsHandler();
+  }, [accessToken, isLoggedIn, role]);
+
+  const filteredData = userPosts
+    .filter((event) =>
+      event.content.toLowerCase().includes(search.toLowerCase()),
+    )
     .filter((event) => statusFilter.includes(event.status.toLowerCase()))
     .filter((event) => {
-      const eventDate = new Date(event.date);
+      const eventDate = new Date(event.created_at);
       const today = new Date();
       if (dateFilter.includes('today')) {
         return (
@@ -133,13 +154,13 @@ function ManagerEventsComp() {
               <th className="thead-column">Event</th>
               <th className="thead-column">Status</th>
               <th className="thead-column">Date</th>
-              <th className="thead-column"></th>
+              {/* <th className="thead-column"></th> */}
             </tr>
           </thead>
           <tbody className="tbody">
             {filteredData.map((event, index) => (
               <tr key={index} className="tbody-row">
-                <td className="tbody-col">{event.title}</td>
+                <td className="tbody-col">{event.content}</td>
                 <td
                   className={`tbody-col tbody-col--flex ${labelEnumToColor(
                     capitalizeFirstLetter(event.status),
@@ -151,22 +172,23 @@ function ManagerEventsComp() {
                   <p>{capitalizeFirstLetter(event.status)}</p>
                 </td>
                 <td className="tbody-col">
-                  {new Date(event.date).toLocaleDateString()}
+                  {new Date(event.created_at).toLocaleDateString()}
                 </td>
-                <td className="tbody-col tbody-col--tools">
+                {/* <td className="tbody-col tbody-col--tools">
                   <a className="tbody-col--tools-tool">
                     <div className="tbody-col--tools-tool-icon-frame">
                       <PencilIcon />
                     </div>
                     <p>Change</p>
                   </a>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
           <tfoot className="tfoot">
             <tr className="tfoot-row">
-              <td className="tfoot-col" colSpan="4">
+              {/* <td className="tfoot-col" colSpan="4"> */}
+              <td className="tfoot-col" colSpan="3">
                 <p>
                   Showing {filteredData.length} of {filteredData.length} events
                 </p>

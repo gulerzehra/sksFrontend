@@ -16,6 +16,8 @@ import ManagerAddEvent from './pages/Manager/Events/Add/ManagerAddEventComp';
 import ManagerPosts from './pages/Manager/Posts/ManagerPostsComp';
 import ManagerNotifications from './pages/Manager/Notifications/ManagerNotificationsComp';
 import Admin from './pages/Admin/AdminComp';
+import AdminAddClubComp from './pages/Admin/AddClub/AdminAddClubComp';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,7 @@ const router = createBrowserRouter([
       { path: 'manage/posts/add', element: <ManagerAddComp /> },
       { path: 'manage/notifications', element: <ManagerNotifications /> },
       { path: 'admin', element: <Admin /> },
+      { path: 'admin/clubs/add', element: <AdminAddClubComp /> },
       // Routes which will be added should be added here, not below of NotFound route
       { path: '*', element: <h1>Not found</h1> },
     ],
@@ -52,6 +55,7 @@ function App() {
   return (
     <DarkModeProvider>
       <GlobalStyles />
+      <Toaster />
       <RouterProvider router={router} />
     </DarkModeProvider>
   );

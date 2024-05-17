@@ -5,12 +5,29 @@ import { MagnifyingGlassIcon } from '../../components/Icons/MagnifyingGlassIcon'
 import { ExclamationCircleIcon } from '../../components/Icons/ExclamationCircleIcon';
 import { CheckCircleIcon } from '../../components/Icons/CheckCircleIcon';
 import { XCircleIcon } from '../../components/Icons/XCircleIcon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TABLE_RESULTS_PER_PAGE } from '../../utils/constants';
 import { DUMMY_DATA_EVENTS } from '../../data/events';
 import { DUMMY_DATA_POSTS } from '../../data/posts';
 import { DUMMY_DATA_CLUBS } from '../../data/clubs';
-import { Button } from '../../components/Button/Button-styled';
+import Button from '../../components/Button/Button';
+import { HiOutlineArrowsRightLeft, HiOutlineTrash } from 'react-icons/hi2';
+import { useSelector } from 'react-redux';
+import {
+  deleteClub,
+  getClubs,
+  getEvents,
+  getPosts,
+  reviewEvent,
+  reviewPost,
+  toggleClub,
+  updateManagerOfClub,
+} from '../../data/data';
+import { store } from '../../data/store';
+import { fetchClubs } from '../../data/clubSlice';
+import toast from 'react-hot-toast';
+import { fetchEvents } from '../../data/eventSlice';
+import { fetchPosts } from '../../data/postSlice';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -55,12 +72,24 @@ function addEmptyRows(data, maxRows) {
   return Array(emptyRows).fill({});
 }
 
-function EventsPanelComp({ events }) {
+function EventsPanelComp() {
   const [search, setSearch] = useState('');
+  const { accessToken } = useSelector((state) => state.user);
+  const { posts } = useSelector((state) => state.post);
 
   function handleSearch(event) {
     setSearch(event.target.value);
   }
+
+  useEffect(() => {
+    async function postsHandler() {
+      const response = await getPosts(accessToken);
+      store.dispatch(fetchPosts(response));
+    }
+    postsHandler();
+  }, [accessToken]);
+
+  if (!posts || posts.length === 0) return null;
 
   return (
     <>
@@ -83,39 +112,76 @@ function EventsPanelComp({ events }) {
           <thead className="thead">
             <tr className="thead-row">
               <th className="thead-column">Event</th>
-              <th className="thead-column">Club</th>
+              <th className="thead-column">Club ID</th>
               <th className="thead-column">Status</th>
               <th className="thead-column">Date</th>
               <th className="thead-column"></th>
             </tr>
           </thead>
           <tbody className="tbody">
-            {events
+            {posts
               .filter(
-                (event) =>
-                  event.title.toLowerCase().includes(search.toLowerCase()) ||
-                  event.status.toLowerCase().includes(search.toLowerCase()),
+                (post) =>
+                  post.content.toLowerCase().includes(search.toLowerCase()) ||
+                  post.status.toLowerCase().includes(search.toLowerCase()),
               )
-              .map((event, index) => (
+              .map((post, index) => (
                 <tr key={index} className="tbody-row">
-                  <td className="tbody-col">{event.title}</td>
-                  <td className="tbody-col">Club ID</td>
+                  <td className="tbody-col">{post.content}</td>
+                  <td className="tbody-col">
+                    {post.club_id ? post.club_id : 'N/A'}
+                  </td>
                   <td
                     className={`tbody-col tbody-col--flex ${labelEnumToColor(
-                      capitalizeFirstLetter(event.status),
+                      capitalizeFirstLetter(post.status),
                     )}`}
+                    onClick={() => {
+                      if (post.status === 'rejected') {
+                        toast.error(
+                          `Rejection reason: ${post.rejection_reason}`,
+                        );
+                      }
+                    }}
                   >
                     <div className="tbody-col-icon-frame">
-                      {labelEnumToIcon(capitalizeFirstLetter(event.status))}
+                      {labelEnumToIcon(capitalizeFirstLetter(post.status))}
                     </div>
-                    <p>{capitalizeFirstLetter(event.status)}</p>
+                    <p>{capitalizeFirstLetter(post.status)}</p>
                   </td>
+
                   <td className="tbody-col">
-                    {new Date(event.date).toLocaleDateString()}
+                    {new Date(post.created_at).toLocaleDateString()}
                   </td>
                   <td className="tbody-col tbody-col--tools">
-                    {event.status === 'pending' && (
-                      <a className="tbody-col--tools-tool">
+                    {post.status === 'pending' && (
+                      <a
+                        className="tbody-col--tools-tool"
+                        onClick={async () => {
+                          const msg = prompt(
+                            'Enter "approved" for approve, "rejected" for reject',
+                          );
+                          if (msg === 'approved') {
+                            await reviewPost(accessToken, post.id);
+                            toast.success('Event approved successfully');
+                          } else if (msg === 'rejected') {
+                            const rejectionMsg = prompt(
+                              'Enter rejection message',
+                            );
+                            if (rejectionMsg) {
+                              await reviewPost(
+                                accessToken,
+                                post.id,
+                                'rejected',
+                                rejectionMsg,
+                              );
+
+                              toast.success('Event rejected successfully');
+                            }
+                          } else {
+                            toast.error('Invalid input');
+                          }
+                        }}
+                      >
                         <div className="tbody-col--tools-tool-icon-frame">
                           <PencilIcon />
                         </div>
@@ -128,13 +194,13 @@ function EventsPanelComp({ events }) {
           </tbody>
           <tfoot className="tfoot">
             <tr className="tfoot-row">
-              <td className="tfoot-col" colSpan="4">
+              <td className="tfoot-col" colSpan="5">
                 <p>
-                  Showing {events.length} of {events.length} events
+                  Showing {posts.length} of {posts.length} posts
                 </p>
               </td>
             </tr>
-            {addEmptyRows(events, TABLE_RESULTS_PER_PAGE).map((_, index) => (
+            {addEmptyRows(posts, TABLE_RESULTS_PER_PAGE).map((_, index) => (
               <tr key={index} className="tbody-row--empty"></tr>
             ))}
           </tfoot>
@@ -163,16 +229,24 @@ function EventsPanelComp({ events }) {
   );
 }
 
-EventsPanelComp.propTypes = {
-  events: DUMMY_DATA_EVENTS,
-};
-
-function PostsPanelComp({ posts }) {
+function PostsPanelComp() {
   const [search, setSearch] = useState('');
+  const { accessToken } = useSelector((state) => state.user);
+  const { events } = useSelector((state) => state.event);
 
   function handleSearch(event) {
     setSearch(event.target.value);
   }
+
+  useEffect(() => {
+    async function eventsHandler() {
+      const response = await getEvents(accessToken);
+      store.dispatch(fetchEvents(response));
+    }
+    eventsHandler();
+  }, [accessToken]);
+
+  if (!events || events.length === 0) return null;
 
   return (
     <>
@@ -194,27 +268,34 @@ function PostsPanelComp({ posts }) {
           <thead className="thead">
             <tr className="thead-row">
               <th className="thead-column">Post</th>
-              <th className="thead-column">Club</th>
+              <th className="thead-column">Club ID</th>
               <th className="thead-column">Status</th>
               <th className="thead-column">Date</th>
               <th className="thead-column"></th>
             </tr>
           </thead>
           <tbody className="tbody">
-            {posts
+            {events
               .filter(
                 (post) =>
-                  post.title.toLowerCase().includes(search.toLowerCase()) ||
+                  post.name.toLowerCase().includes(search.toLowerCase()) ||
                   post.status.toLowerCase().includes(search.toLowerCase()),
               )
               .map((post, index) => (
                 <tr key={index} className="tbody-row">
-                  <td className="tbody-col">{post.title}</td>
-                  <td className="tbody-col">Club ID</td>
+                  <td className="tbody-col">{post.name}</td>
+                  <td className="tbody-col">{post.club_id}</td>
                   <td
                     className={`tbody-col tbody-col--flex ${labelEnumToColor(
                       capitalizeFirstLetter(post.status),
                     )}`}
+                    onClick={() => {
+                      if (post.status === 'rejected') {
+                        toast.error(
+                          `Rejection reason: ${post.rejection_reason}`,
+                        );
+                      }
+                    }}
                   >
                     <div className="tbody-col-icon-frame">
                       {labelEnumToIcon(capitalizeFirstLetter(post.status))}
@@ -226,7 +307,34 @@ function PostsPanelComp({ posts }) {
                   </td>
                   <td className="tbody-col tbody-col--tools">
                     {post.status === 'pending' && (
-                      <a className="tbody-col--tools-tool">
+                      <a
+                        className="tbody-col--tools-tool"
+                        onClick={async () => {
+                          const msg = prompt(
+                            'Enter "approved" for approve, "rejected" for reject',
+                          );
+                          if (msg === 'approved') {
+                            await reviewEvent(accessToken, post.id);
+                            toast.success('Post approved successfully');
+                          } else if (msg === 'rejected') {
+                            const rejectionMsg = prompt(
+                              'Enter rejection message',
+                            );
+                            if (rejectionMsg) {
+                              await reviewEvent(
+                                accessToken,
+                                post.id,
+                                'rejected',
+                                rejectionMsg,
+                              );
+
+                              toast.success('Post rejected successfully');
+                            }
+                          } else {
+                            toast.error('Invalid input');
+                          }
+                        }}
+                      >
                         <div className="tbody-col--tools-tool-icon-frame">
                           <PencilIcon />
                         </div>
@@ -239,13 +347,13 @@ function PostsPanelComp({ posts }) {
           </tbody>
           <tfoot className="tfoot">
             <tr className="tfoot-row">
-              <td className="tfoot-col" colSpan="4">
+              <td className="tfoot-col" colSpan="5">
                 <p>
-                  Showing {posts.length} of {posts.length} posts
+                  Showing {events.length} of {events.length} posts
                 </p>
               </td>
             </tr>
-            {addEmptyRows(posts, TABLE_RESULTS_PER_PAGE).map((_, index) => (
+            {addEmptyRows(events, TABLE_RESULTS_PER_PAGE).map((_, index) => (
               <tr key={index} className="tbody-row--empty"></tr>
             ))}
           </tfoot>
@@ -255,22 +363,32 @@ function PostsPanelComp({ posts }) {
   );
 }
 
-PostsPanelComp.propTypes = {
-  posts: DUMMY_DATA_POSTS,
-};
-
-function ClubsPanelComp({ clubs }) {
+function ClubsPanelComp() {
   const [search, setSearch] = useState('');
+  const { accessToken } = useSelector((state) => state.user);
+  const { clubs } = useSelector((state) => state.club);
 
   function handleSearch(event) {
     setSearch(event.target.value);
   }
 
+  useEffect(() => {
+    async function clubsHandler() {
+      const response = await getClubs(accessToken);
+      store.dispatch(fetchClubs(response));
+    }
+    clubsHandler();
+  }, [accessToken]);
+
+  if (!clubs || clubs.length === 0) return null;
+
   return (
     <>
       <div className="title-line">
         <h2 className="subtitle">Clubs</h2>
-        <Button linkTo="add">Add Club</Button>
+        <Button size="small" linkTo="clubs/add">
+          Add Club
+        </Button>
       </div>
       <div className="panel panel-fix">
         <div className="search">
@@ -289,6 +407,7 @@ function ClubsPanelComp({ clubs }) {
           <thead className="thead">
             <tr className="thead-row">
               <th className="thead-column">Club</th>
+              <th className="thead-column">Status</th>
               <th className="thead-column"></th>
             </tr>
           </thead>
@@ -300,12 +419,71 @@ function ClubsPanelComp({ clubs }) {
               .map((club, index) => (
                 <tr key={index} className="tbody-row">
                   <td className="tbody-col">{club.name}</td>
+                  <td
+                    className={`tbody-col ${
+                      club.is_active ? 'color-success' : 'color-danger'
+                    }`}
+                    onClick={async () => {
+                      const msg = confirm(
+                        'Are you sure you want to toggle status of this club?',
+                      );
+                      if (msg) {
+                        await toggleClub(accessToken, club.id);
+                        toast.success('Club status toggled successfully');
+                      }
+                    }}
+                  >
+                    {club.is_active ? 'Active' : 'Inactive'}
+                  </td>
                   <td className="tbody-col tbody-col--tools">
-                    <a className="tbody-col--tools-tool">
+                    <a
+                      className="tbody-col--tools-tool"
+                      onClick={async () => {
+                        const msg = confirm(
+                          'Are you sure you want to toggle status of this club?',
+                        );
+                        if (msg) {
+                          await toggleClub(accessToken, club.id);
+                          toast.success('Club status toggled successfully');
+                        }
+                      }}
+                    >
+                      <div className="tbody-col--tools-tool-icon-frame">
+                        <HiOutlineArrowsRightLeft />
+                      </div>
+                      <p>Toggle</p>
+                    </a>
+                    <a
+                      className="tbody-col--tools-tool"
+                      onClick={async () => {
+                        const msg = prompt('Enter the new manager ID');
+                        if (msg) {
+                          await updateManagerOfClub(accessToken, club.id, msg);
+                          toast.success('Manager updated successfully');
+                        }
+                      }}
+                    >
                       <div className="tbody-col--tools-tool-icon-frame">
                         <PencilIcon />
                       </div>
                       <p>Review</p>
+                    </a>
+                    <a
+                      className="tbody-col--tools-tool color-danger"
+                      onClick={async () => {
+                        const msg = confirm(
+                          'Are you sure you want to delete this club?',
+                        );
+                        if (msg) {
+                          await deleteClub(accessToken, club.id);
+                          toast.success('Club deleted successfully');
+                        }
+                      }}
+                    >
+                      <div className="tbody-col--tools-tool-icon-frame">
+                        <HiOutlineTrash />
+                      </div>
+                      <p>Delete</p>
                     </a>
                   </td>
                 </tr>
@@ -328,10 +506,6 @@ function ClubsPanelComp({ clubs }) {
     </>
   );
 }
-
-ClubsPanelComp.propTypes = {
-  clubs: DUMMY_DATA_CLUBS,
-};
 
 function AdminComp() {
   return (

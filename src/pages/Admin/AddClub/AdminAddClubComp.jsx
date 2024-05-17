@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { BlogContainer } from './ManagerAddPostComp-styled';
-import ButtonComp from '../../../../components/Button/Button';
-import { createEvent } from '../../../../data/data';
+import { BlogContainer } from './AdminAddClubComp-styled';
+import ButtonComp from '../../../components/Button/Button';
 import { useSelector } from 'react-redux';
+import { createClub } from '../../../data/data';
 import toast from 'react-hot-toast';
+import { store } from '../../../data/store';
+import { addClub } from '../../../data/clubSlice';
 
-function BlogComp() {
+function AdminAddClubComp() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [name, setName] = useState('');
-  const [content, setContent] = useState('');
+  const [clubName, setClubName] = useState('');
+  const [managerId, setManagerId] = useState('');
   const { accessToken } = useSelector((state) => state.user);
+  // const { clubs } = useSelector((state) => state.club);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -23,10 +26,11 @@ function BlogComp() {
     alert('File uploaded successfully: ' + selectedFile.name); // NOTE: TEMPORARY
   };
 
-  const addEventXHandler = async () => {
-    const response = await createEvent(accessToken, name, content, new Date());
+  const addClubHandler = async () => {
+    const response = await createClub(accessToken, clubName, managerId);
     console.log(response);
-    toast.success('Post added successfully');
+    store.dispatch(addClub(response));
+    toast.success('Club added successfully');
   };
 
   return (
@@ -82,9 +86,9 @@ function BlogComp() {
 
             <input
               type="text"
-              placeholder="Post Title"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Club Name"
+              value={clubName}
+              onChange={(e) => setClubName(e.target.value)}
               style={{
                 width: '300px',
                 height: '40px',
@@ -93,27 +97,27 @@ function BlogComp() {
               }}
             />
             <p>
-              When naming an post, be clear, concise, relevant, memorable, avoid
-              jargon, offensive language, and check for availability and legal
-              issues.
+              Please enter the name of the club you want to add to the system.
             </p>
             <div className="yatay-cizgi"></div>
 
-            <textarea
-              className="place"
-              placeholder="Post..."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+            <input
+              type="number"
+              placeholder="Manager Id"
+              value={managerId}
+              onChange={(e) => setManagerId(e.target.value)}
               style={{
                 width: '300px',
-                height: '100px',
+                height: '40px',
                 borderRadius: '10px',
                 border: '2px solid #E5E5E5',
-                resize: 'none',
               }}
             />
+            <p>
+              Please enter the ID of the manager you want to assign to the club.
+            </p>
             <br></br>
-            <ButtonComp className="send-button" onClick={addEventXHandler}>
+            <ButtonComp className="send-button" onClick={addClubHandler}>
               Send Request
             </ButtonComp>
           </div>
@@ -123,4 +127,4 @@ function BlogComp() {
   );
 }
 
-export default BlogComp;
+export default AdminAddClubComp;

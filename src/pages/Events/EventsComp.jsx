@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { searchData } from '../../utils/searchData';
-import { DUMMY_DATA_EVENTS as DUMMY_DATA } from '../../data/events';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { HiFunnel, HiCalendarDays } from 'react-icons/hi2';
@@ -13,6 +12,10 @@ import { Calendar as WeeklyCalendr, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { dtf } from '../../utils/dtFormatter';
+import { useSelector } from 'react-redux';
+import { getApprovedPosts } from '../../data/data';
+import { store } from '../../data/store';
+import { fetchPosts, selectPost } from '../../data/postSlice';
 
 const localizer = momentLocalizer(moment);
 
@@ -97,6 +100,20 @@ function EventsLineComp({ title, events, children }) {
     selectedDateText = 'Select Date';
   }
 
+  const filteredEvents = events.filter((event) => {
+    const isCategoryMatch =
+      selectedCategories.length === 0 ||
+      selectedCategories
+        .map((category) => category.toLowerCase())
+        .includes(event.tag);
+
+    const isDateMatch =
+      !selectedDate ||
+      new Date(event.created_at).toDateString() === selectedDate.toDateString();
+
+    return isCategoryMatch && isDateMatch;
+  });
+
   return (
     <>
       <div className="title-line">
@@ -126,7 +143,7 @@ function EventsLineComp({ title, events, children }) {
               </div>
               <div className="popup-content">
                 <FilterOptionComp
-                  name={`Health-${title.split(' ')[0]}`}
+                  name={`Sports-${title.split(' ')[0]}`}
                   selectedCategories={selectedCategories}
                   setSelectedCategories={setSelectedCategories}
                 />
@@ -173,15 +190,35 @@ function EventsLineComp({ title, events, children }) {
       </div>
 
       <Events>
-        {events.map((event) => (
-          <EventComp
+        {filteredEvents.map((event) => (
+          <Link
             key={event.id}
-            id={event.id}
-            title={event.title}
-            address={event.address}
-            date={event.date}
-            img={event.img}
-          />
+            to={`/events/${event.id}`}
+            onClick={() => {
+              store.dispatch(selectPost(event));
+            }}
+          >
+            <article className="event" key={event.id}>
+              <div className="event-img-frame">
+                <img
+                  src="https://placehold.co/300x200"
+                  alt={title}
+                  className="event-img"
+                />
+              </div>
+              <div className="event-content">
+                <h2 className="event-title">{event.content}</h2>
+                <address className="event-address">
+                  Uskudar University | Merkez
+                </address>
+                <p className="event-datetime">
+                  <time dateTime={event.created_at}>
+                    {dtf(event.created_at)}
+                  </time>
+                </p>
+              </div>
+            </article>
+          </Link>
         ))}
       </Events>
 
@@ -243,20 +280,61 @@ ClubEventsComp.propTypes = {
 
 function EventsComp() {
   const [searchQuery, setSearchQuery] = useState('');
-  const filteredData = searchData(DUMMY_DATA, searchQuery, 'title');
-  const [officialEvents, clubEvents] = filteredData.reduce(
-    (acc, event) => {
-      if (event.type === 'official') {
-        acc[0].push(event);
-      } else if (event.type === 'club') {
-        acc[1].push(event);
-      } else {
-        console.error('Invalid event type:', event.type);
-      }
-      return acc;
+  const { posts } = useSelector((state) => state.post);
+
+  useEffect(() => {
+    async function postsHandler() {
+      const response = await getApprovedPosts();
+      store.dispatch(fetchPosts(response));
+    }
+    postsHandler();
+  }, []);
+
+  /* Example posts data
+  [
+    {
+        "id": 10,
+        "tag": "sports",
+        "category": "announcement",
+        "author_id": 2,
+        "author_name": "test2",
+        "club_id": 2,
+        "club_name": "Araba Klubu",
+        "content": "Exciting news for our sports fans!",
+        "created_at": "2024-04-25T21:29:50.970949Z",
+        "status": "approved",
+        "rejection_reason": ""
     },
-    [[], []],
-  );
+    {
+        "id": 11,
+        "tag": "sports",
+        "category": "announcement",
+        "author_id": 2,
+        "author_name": "test2",
+        "club_id": 2,
+        "club_name": "Araba Klubu",
+        "content": "New Exciting news for our sports fans!",
+        "created_at": "2024-04-29T14:51:46.093828Z",
+        "status": "approved",
+        "rejection_reason": ""
+    }
+]
+  */
+
+  const filteredData = searchData(posts, searchQuery, 'content');
+  // const [officialEvents, clubEvents] = filteredData.reduce(
+  //   (acc, event) => {
+  //     if (event.type === 'official') {
+  //       acc[0].push(event);
+  //     } else if (event.type === 'club') {
+  //       acc[1].push(event);
+  //     } else {
+  //       console.error('Invalid event type:', event.type);
+  //     }
+  //     return acc;
+  //   },
+  //   [[], []],
+  // );
 
   useDocumentTitle('Events');
 
@@ -266,22 +344,34 @@ function EventsComp() {
 
   return (
     <InnerContainer>
+      {/* <EventsLineComp title="All Events" events={filteredData} searchQuery={searchQuery} /> */}
       <SearchComp searchQuery={searchQuery} onChangeHandler={onChangeHandler} />
-      <OfficialEventsComp events={officialEvents} searchQuery={searchQuery} />
+      {/* <OfficialEventsComp events={officialEvents} searchQuery={searchQuery} /> */}
+      <EventsLineComp
+        title="All Events"
+        events={filteredData}
+        searchQuery={searchQuery}
+      />
       <h1 className="weekly-title">Weekly Calendar</h1>
       <WeeklyCalendr
         localizer={localizer}
         defaultView="week"
-        events={DUMMY_DATA.map((event) => ({
-          title: event.title,
-          start: new Date(event.date),
-          end: new Date(event.endDate),
+        events={filteredData.map((event) => ({
+          title: event.content,
+          start: new Date(event.created_at),
+          // derived from event.created_at and add 2 hr
+          end: new Date(new Date(event.created_at).setHours(2)),
         }))}
+        // events={DUMMY_DATA.map((event) => ({
+        //   title: event.title,
+        //   start: new Date(event.date),
+        //   end: new Date(event.endDate),
+        // }))}
         startAccessor="start"
         endAccessor="end"
         style={{ width: '500', margin: '50px auto' }}
       />
-      <ClubEventsComp events={clubEvents} searchQuery={searchQuery} />
+      {/* <ClubEventsComp events={clubEvents} searchQuery={searchQuery} /> */}
     </InnerContainer>
   );
 }

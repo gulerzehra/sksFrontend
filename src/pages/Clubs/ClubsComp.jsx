@@ -1,16 +1,27 @@
 import { Clubs, ClubsAlt, InnerContainer } from './ClubsComp-styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks/useQuery';
 import PropTypes from 'prop-types';
 import { searchData } from '../../utils/searchData';
-import { DUMMY_DATA_CLUBS as DUMMY_DATA } from '../../data/clubs';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import SearchComp from '../../components/Search/SearchComp';
+import { useSelector } from 'react-redux';
+import { getClub, getClubs } from '../../data/data';
+import { store } from '../../data/store';
+import { fetchClubs, selectClub } from '../../data/clubSlice';
 
-function ClubComp({ id, name, img, events }) {
+function ClubComp({ id, name, img, topic, slug }) {
+  const { accessToken } = useSelector((state) => state.user);
+
   return (
-    <Link to={`/clubs/${id}`}>
+    <Link
+      to={slug}
+      onClick={async () => {
+        const response = await getClub(accessToken, id);
+        store.dispatch(selectClub(response));
+      }}
+    >
       <div className="club">
         <div className="club-img-frame">
           <img className="club-img" src={img} alt={name} />
@@ -18,7 +29,7 @@ function ClubComp({ id, name, img, events }) {
         <div className="club-content">
           <h2 className="club-title">{name}</h2>
           <p className="club-events-tip">Events</p>
-          <p className="club-events">{events}</p>
+          <p className="club-events">{topic}</p>
         </div>
       </div>
     </Link>
@@ -29,10 +40,13 @@ ClubComp.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
-  events: PropTypes.string.isRequired,
+  topic: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
-function ClubCompAlt({ id, name, img, president, mail, description }) {
+function ClubCompAlt({ id, name, img, president, mail, description, slug }) {
+  const { accessToken } = useSelector((state) => state.user);
+
   function mailHandler(mail) {
     if (!mail) {
       return '-';
@@ -47,7 +61,13 @@ function ClubCompAlt({ id, name, img, president, mail, description }) {
     <div className="club-container">
       <div className="club">
         <div className="club-side">
-          <Link to={`/clubs/${id}`}>
+          <Link
+            to={slug}
+            onClick={async () => {
+              const response = await getClub(accessToken, id);
+              store.dispatch(selectClub(response));
+            }}
+          >
             <div className="club-shadow"></div>
             <div className="club-img-frame">
               <img className="club-img" src={img} alt={name} />
@@ -80,14 +100,19 @@ ClubCompAlt.propTypes = {
   president: PropTypes.string.isRequired,
   mail: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
 function ClubsComp() {
   const query = useQuery();
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [showAltView, setShowAltView] = useState(false);
 
-  const filteredData = searchData(DUMMY_DATA, searchQuery);
+  const { accessToken } = useSelector((state) => state.user);
+  const { clubs } = useSelector((state) => state.club);
+
+  const filteredData = searchData(clubs, searchQuery);
 
   useDocumentTitle('Clubs');
 
@@ -95,21 +120,34 @@ function ClubsComp() {
     setSearchQuery(e.target.value);
   }
 
+  function toggleView() {
+    setShowAltView((showAltView) => !showAltView);
+  }
+
+  useEffect(() => {
+    async function clubsHandler() {
+      const response = await getClubs(accessToken);
+      store.dispatch(fetchClubs(response));
+    }
+    clubsHandler();
+  }, [accessToken]);
+
   return (
     <InnerContainer>
       <h1 className="title">Clubs</h1>
       <SearchComp searchQuery={searchQuery} onChangeHandler={onChangeHandler} />
-      {query.get('view') === 'alt' ? (
+      {query.get('view') === 'alt' || showAltView ? (
         <ClubsAlt>
           {filteredData.map((club) => (
             <ClubCompAlt
               key={club.id}
               id={club.id}
               name={club.name}
-              img={club.img}
-              president={club.president}
-              mail={club.mail}
-              description={club.description}
+              img="/placeholders/club.png"
+              president="{club.president}"
+              mail="{club.mail}"
+              description="{club.description}"
+              slug={club.slug}
             />
           ))}
         </ClubsAlt>
@@ -120,12 +158,14 @@ function ClubsComp() {
               key={club.id}
               id={club.id}
               name={club.name}
-              img={club.img}
-              events={club.events}
+              img="/placeholders/club.png"
+              topic="{club.topic}"
+              slug={club.slug}
             />
           ))}
         </Clubs>
       )}
+      <button onClick={toggleView}>Show alternative view</button>
     </InnerContainer>
   );
 }

@@ -9,6 +9,8 @@ export const LoginPageContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 140px;
+  background-color: white;
+  color: black;
 `;
 
 export const LoginInfo = styled.div`

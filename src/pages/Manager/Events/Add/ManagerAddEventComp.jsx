@@ -2,10 +2,16 @@ import { useState } from 'react';
 import { AddEventContainer } from './ManagerAddEventComp-styled';
 import CalendarComp from '../../../../components/Calendar/CalendarComp';
 import ButtonComp from '../../../../components/Button/Button';
+import { createPost } from '../../../../data/data';
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 function ManagerAddEventComp() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [tag, setTag] = useState('');
+  const [content, setContent] = useState('');
+  const { accessToken } = useSelector((state) => state.user);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -16,6 +22,17 @@ function ManagerAddEventComp() {
     };
     reader.readAsDataURL(file);
     alert('File uploaded successfully: ' + selectedFile.name); // NOTE: TEMPORARY
+  };
+
+  const addPostHandler = async () => {
+    const response = await createPost(
+      accessToken,
+      tag,
+      'announcement',
+      content,
+    );
+    console.log(response);
+    toast.success('Event added successfully');
   };
 
   return (
@@ -72,6 +89,8 @@ function ManagerAddEventComp() {
             <input
               type="text"
               placeholder="Activity Name"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               style={{
                 width: '300px',
                 height: '40px',
@@ -87,7 +106,7 @@ function ManagerAddEventComp() {
             </p>
             <div className="yatay-cizgi"></div>
 
-            <textarea
+            {/* <textarea
               className="place"
               placeholder="Activity Description"
               style={{
@@ -98,11 +117,13 @@ function ManagerAddEventComp() {
                 resize: 'none',
               }}
             />
-            <div className="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div> */}
 
             <input
               type="text"
               placeholder="Category"
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
               style={{
                 width: '300px',
                 height: '40px',
@@ -112,7 +133,7 @@ function ManagerAddEventComp() {
             />
             <div className="yatay-cizgi"></div>
 
-            <input
+            {/* <input
               type="text"
               placeholder="URL"
               style={{
@@ -122,13 +143,13 @@ function ManagerAddEventComp() {
                 border: '2px solid #E5E5E5',
               }}
             />
-            <div className="yatay-cizgi"></div>
+            <div className="yatay-cizgi"></div> */}
 
             <h5>DATE: </h5>
             <CalendarComp />
             <div className="yatay-cizgi" style={{ marginTop: '10px' }}></div>
 
-            <p style={{ marginTop: '10px' }}>Announcement</p>
+            {/* <p style={{ marginTop: '10px' }}>Announcement</p>
             <input
               type="text"
               placeholder="Annoucement"
@@ -151,8 +172,10 @@ function ManagerAddEventComp() {
                 border: '2px solid #E5E5E5',
               }}
             />
-            <br></br>
-            <ButtonComp className="send-button">Send Request</ButtonComp>
+            <br></br> */}
+            <ButtonComp className="send-button" onClick={addPostHandler}>
+              Send Request
+            </ButtonComp>
           </div>
         </div>
       </AddEventContainer>
