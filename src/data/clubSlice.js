@@ -15,9 +15,12 @@ export const clubsSlice = createSlice({
     selectClub: (state, action) => {
       state.selectedClub = action.payload;
     },
+    addClub: (state, action) => {
+      state.clubs.push(action.payload);
+    },
   },
 });
 
-export const { fetchClubs, selectClub } = clubsSlice.actions;
+export const { fetchClubs, selectClub, addClub } = clubsSlice.actions;
 
 export default clubsSlice.reducer;

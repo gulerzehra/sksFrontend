@@ -10,7 +10,8 @@ import { TABLE_RESULTS_PER_PAGE } from '../../utils/constants';
 import { DUMMY_DATA_EVENTS } from '../../data/events';
 import { DUMMY_DATA_POSTS } from '../../data/posts';
 import { DUMMY_DATA_CLUBS } from '../../data/clubs';
-import { Button } from '../../components/Button/Button-styled';
+import Button from '../../components/Button/Button';
+import { HiOutlineTrash } from 'react-icons/hi2';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -270,7 +271,9 @@ function ClubsPanelComp({ clubs }) {
     <>
       <div className="title-line">
         <h2 className="subtitle">Clubs</h2>
-        <Button linkTo="add">Add Club</Button>
+        <Button size="small" linkTo="clubs/add">
+          Add Club
+        </Button>
       </div>
       <div className="panel panel-fix">
         <div className="search">
@@ -306,6 +309,12 @@ function ClubsPanelComp({ clubs }) {
                         <PencilIcon />
                       </div>
                       <p>Review</p>
+                    </a>
+                    <a className="tbody-col--tools-tool color-danger">
+                      <div className="tbody-col--tools-tool-icon-frame">
+                        <HiOutlineTrash />
+                      </div>
+                      <p>Delete</p>
                     </a>
                   </td>
                 </tr>
