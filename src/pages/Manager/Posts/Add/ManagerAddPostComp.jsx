@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { BlogContainer } from './ManagerAddPostComp-styled';
 import ButtonComp from '../../../../components/Button/Button';
+import { createEvent } from '../../../../data/data';
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 function BlogComp() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [name, setName] = useState('');
+  const [content, setContent] = useState('');
+  const { accessToken } = useSelector((state) => state.user);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -15,6 +21,12 @@ function BlogComp() {
     };
     reader.readAsDataURL(file);
     alert('File uploaded successfully: ' + selectedFile.name); // NOTE: TEMPORARY
+  };
+
+  const addEventXHandler = async () => {
+    const response = await createEvent(accessToken, name, content, new Date());
+    console.log(response);
+    toast.success('Post added successfully');
   };
 
   return (
@@ -71,6 +83,8 @@ function BlogComp() {
             <input
               type="text"
               placeholder="Post Title"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               style={{
                 width: '300px',
                 height: '40px',
@@ -88,6 +102,8 @@ function BlogComp() {
             <textarea
               className="place"
               placeholder="Post..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               style={{
                 width: '300px',
                 height: '100px',
@@ -97,7 +113,9 @@ function BlogComp() {
               }}
             />
             <br></br>
-            <ButtonComp className="send-button">Send Request</ButtonComp>
+            <ButtonComp className="send-button" onClick={addEventXHandler}>
+              Send Request
+            </ButtonComp>
           </div>
         </div>
       </BlogContainer>
